@@ -5,7 +5,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/public/src/index.js"
+        "destination": "/public/build/index.html"
       }
     ]
   }
