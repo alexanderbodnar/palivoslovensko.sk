@@ -7,11 +7,11 @@ All notable changes to this project are documented in the [CHANGELOG](CHANGELOG.
 The changelog will however be also automatically updated in this section.<br>
 
 <!-- changelog-start -->
-<li>02.09.2024</li>
-    <li>Implemented automatic deploy runner on GitHub</li>
-    <li>Implemented automatic CHANGELOG updates on the repo homepage</li>
-<li>01.09.2024</li>
-    <li>Initial Firebase repo commit. Still experimenting</li>
-    <li>Deployed React app on www.palivoslovensko.sk.</li>
-    <li>Adding SDK to index.html & updating package.json with firebase</li>
+● 02.09.2024<br>
+    - Implemented automatic deploy runner on GitHub<br>
+    - Implemented automatic CHANGELOG updates on the repo homepage<br>
+● 01.09.2024<br>
+    - Initial Firebase repo commit. Still experimenting<br>
+    - Deployed React app on www.palivoslovensko.sk.<br>
+    - Adding SDK to index.html & updating package.json with firebase<br>
 <!-- changelog-end -->
