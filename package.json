@@ -7,7 +7,11 @@
     "@heroicons/react": "^2.1.5",
     "chart.js": "^4.4.4",
     "cra-template": "1.2.0",
+<<<<<<< HEAD
     "i18next": "^23.14.0",
+=======
+    "firebase": "^10.13.1",
+>>>>>>> 7430fd163e185e43f77b4b931a8ee7a93db5f514
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-charts": "^3.0.0-beta.57",
