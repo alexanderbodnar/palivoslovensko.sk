@@ -10,13 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.11'
+    
     - name: Run the update script
       run: python update_readme.py
-    - name: Commit changes
+    
+    - name: Check for changes
+      id: check_changes
+      run: |
+        git diff --exit-code README.md || echo "Changes detected"
+    
+    - name: Commit and push changes
+      if: steps.check_changes.outputs.stdout == 'Changes detected'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
