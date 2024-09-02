@@ -63,4 +63,5 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+  analytics().logEvent('screen_view')
 </script>
