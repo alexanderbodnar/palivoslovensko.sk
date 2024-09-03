@@ -1,23 +1,64 @@
-// src/components/GasPricingTable.jsx
-
 import React from "react";
 
-export default function YearlyPricingTable() {
-  // Example data for monthly gas pricing
-  const gasPricingData = [
-    { month: "January", price: "$2.50" },
-    { month: "February", price: "$2.55" },
-    { month: "March", price: "$2.60" },
-    { month: "April", price: "$2.45" },
-    { month: "May", price: "$2.70" },
-    { month: "June", price: "$2.80" },
-    { month: "July", price: "$2.90" },
-    { month: "August", price: "$2.85" },
-    { month: "September", price: "$2.75" },
-    { month: "October", price: "$2.65" },
-    { month: "November", price: "$2.60" },
-    { month: "December", price: "$2.55" },
-  ];
+const fillWeeksArray = (data, numOfWeeks) => {
+  const pricesArr = data.value;
+  const splitedArr = [];
+
+  for (let i = 0; i < pricesArr.length; i += numOfWeeks) {
+    const chunk = pricesArr
+      .slice(i, i + numOfWeeks)
+      .map((value) => (value === null ? "No data" : value));
+    splitedArr.push(chunk);
+  }
+
+  const weeksArr = Object.values(data.dimension.sp0207ts_tyz.category.label);
+  const resultArray = [];
+
+  weeksArr.forEach((week, index) => {
+    let tableData = {
+      weekName: week,
+      fuelPrice: splitedArr[index],
+    };
+
+    resultArray.push(tableData);
+  });
+
+  return resultArray;
+};
+
+export default function YearlyPricingTable({ data }) {
+  let tableHeaders, tableRows;
+  const headers = Object.values(data.dimension.sp0207ts_ukaz.category.label);
+  const weeksArray = fillWeeksArray(data, headers.length);
+
+  //separate
+  weeksArray.sort((a, b) => {
+    const nameA = Number(a.weekName.split(".").at(0)); // ignore upper and lowercase
+    const nameB = Number(b.weekName.split(".").at(0)); // ignore upper and lowercase
+    return nameA > nameB ? -1 : 1;
+  });
+  try {
+    tableHeaders = headers.map((el) => {
+      return (
+        <th key={el} className="py-2 px-4 border-b">
+          {el}
+        </th>
+      );
+    });
+    tableRows = weeksArray?.map((el, index) => {
+      return (
+        <tr key={el.weekName}>
+          <th key={el.weekName}>{el.weekName}</th>
+          {el?.fuelPrice?.map((el2, index2) => {
+            return <td key={`${index}+${index2}`}>{el2}</td>;
+          })}
+        </tr>
+      );
+    });
+  } catch (error) {
+    console.log(error.message);
+    console.log(tableHeaders);
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -25,18 +66,13 @@ export default function YearlyPricingTable() {
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr className="bg-gray-200 text-gray-700">
-            <th className="py-2 px-4 border-b">Month</th>
-            <th className="py-2 px-4 border-b">Price</th>
+            <th key="week" className="py-2 px-4 border-b">
+              Tyzden
+            </th>
+            {tableHeaders}
           </tr>
         </thead>
-        <tbody>
-          {gasPricingData.map((data, index) => (
-            <tr key={index} className="text-center">
-              <td className="py-2 px-4 border-b">{data.month}</td>
-              <td className="py-2 px-4 border-b">{data.price}</td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{tableRows}</tbody>
       </table>
     </div>
   );
