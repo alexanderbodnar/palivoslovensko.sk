@@ -25,11 +25,14 @@ ChartJS.register(
   Legend
 );
 
-export default function PriceDevelopmentGraph({ week = "all", fuel = "all" }) {
+export default function PriceDevelopmentGraph({
+  week = "202452,202409" /*"all"*/,
+  fuel = "all",
+}) {
   const [data, setData] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-      week = "202452,202409";
+      //week = "202452,202409";
       const result = await getDataWithParams(week, fuel);
       console.log(result);
       if (result) {
