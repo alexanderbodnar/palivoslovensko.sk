@@ -1,3 +1,8 @@
+● 04.09.2024<br>
+    - Removed the readme_updater.py & the pipeline for it
+    - Created the structure for the facebook&instagram python bots
+    - Working on the API implementations for the bot
+    - Working on the React App (Ivo)
 ● 03.09.2024<br>
     - Implementing the prototype of the react app<br>
     - Fixing the build & deploy of the app on prod<br>
