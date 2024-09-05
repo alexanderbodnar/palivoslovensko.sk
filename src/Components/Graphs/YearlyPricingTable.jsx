@@ -1,42 +1,27 @@
 import React from "react";
+import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
+import { fillWeeksArray } from "./helperFunctions";
 
-const fillWeeksArray = (data, numOfWeeks) => {
-  const pricesArr = data.value;
-  const splitedArr = [];
-
-  for (let i = 0; i < pricesArr.length; i += numOfWeeks) {
-    const chunk = pricesArr
-      .slice(i, i + numOfWeeks)
-      .map((value) => (value === null ? "No data" : value));
-    splitedArr.push(chunk);
-  }
-
-  const weeksArr = Object.values(data.dimension.sp0207ts_tyz.category.label);
-  const resultArray = [];
-
-  weeksArr.forEach((week, index) => {
-    let tableData = {
-      weekName: week,
-      fuelPrice: splitedArr[index],
-    };
-
-    resultArray.push(tableData);
-  });
-
-  return resultArray;
+const formatWeekCaption = (weekName) => {
+  const week = weekName.split("("); //.join().trimEnd();
+  return (
+    <th className="whitespace-nowrap text-left flex flex-col" key={weekName}>
+      <text className="self-center">{week.at(0)}</text>
+      <text className="text-gray-500 text-sm font-light">
+        {week.at(1).replace(")", "").replaceAll(" ", "")}
+      </text>
+    </th>
+  );
 };
 
-export default function YearlyPricingTable({ data }) {
+export default function YearlyPricingTable() {
+  const { data, loading } = useStatisticsSectionContext();
+  if (loading) return <h1>cakaj</h1>;
+
   let tableHeaders, tableRows;
   const headers = Object.values(data.dimension.sp0207ts_ukaz.category.label);
   const weeksArray = fillWeeksArray(data, headers.length);
 
-  //separate
-  weeksArray.sort((a, b) => {
-    const nameA = Number(a.weekName.split(".").at(0)); // ignore upper and lowercase
-    const nameB = Number(b.weekName.split(".").at(0)); // ignore upper and lowercase
-    return nameA > nameB ? -1 : 1;
-  });
   try {
     tableHeaders = headers.map((el) => {
       return (
@@ -45,12 +30,19 @@ export default function YearlyPricingTable({ data }) {
         </th>
       );
     });
-    tableRows = weeksArray?.map((el, index) => {
+    tableRows = weeksArray?.map((week, index) => {
       return (
-        <tr key={el.weekName}>
-          <th key={el.weekName}>{el.weekName}</th>
-          {el?.fuelPrice?.map((el2, index2) => {
-            return <td key={`${index}+${index2}`}>{el2}</td>;
+        <tr key={week.weekName}>
+          {formatWeekCaption(week.weekName)}
+          {week?.fuelPrice?.map((price, index2) => {
+            return (
+              <td
+                className="whitespace-nowrap px-2 py-1 text-center"
+                key={`${index}+${index2}`}
+              >
+                {price}
+              </td>
+            );
           })}
         </tr>
       );
@@ -61,9 +53,8 @@ export default function YearlyPricingTable({ data }) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-4">Monthly Gas Pricing</h2>
-      <table className="min-w-full bg-white border border-gray-300">
+    <div className="flex w-full relative shadow-md sm:rounded-lg">
+      <table className="table-auto bg-white border border-gray-300 max-h-full overflow-auto max-w-full">
         <thead>
           <tr className="bg-gray-200 text-gray-700">
             <th key="week" className="py-2 px-4 border-b">

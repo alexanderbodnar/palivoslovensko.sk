@@ -12,6 +12,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useContext } from "react";
+import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
+import { fillWeeksArray } from "./helperFunctions";
 // import { getDataWithParams } from "../../API/monthlyData";
 
 // Register Chart.js components
@@ -25,7 +28,9 @@ ChartJS.register(
   Legend
 );
 
-export default function PriceDevelopmentGraph({ data }) {
+export default function PriceDevelopmentGraph() {
+  const { data, loading } = useStatisticsSectionContext();
+  if (loading) return <h1>vytrimgeno</h1>;
   // const [graphData, setGraphData] = useState(null);
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -52,6 +57,33 @@ export default function PriceDevelopmentGraph({ data }) {
 
   //   fetchData();
   // }, [data]);
+  const headers = Object.values(data.dimension.sp0207ts_ukaz.category.label);
+  const x = fillWeeksArray(data, headers.length);
+  const graphData = {
+    labels: headers, // Extract week names for the labels
+
+    datasets: headers.map((fuel, index) => ({
+      label: fuel,
+      data: x.map((el) => el.fuelPrice[index]), // Extract fuel prices for this fuel type
+      borderColor: `rgba(${index * 50}, ${index * 100}, 200, 1)`,
+      backgroundColor: `rgba(${index * 50}, ${index * 100}, 200, 0.2)`,
+      fill: true,
+    })),
+  };
+
+  //       const dataset = Object.values(
+  //         data.dimension.sp0207ts_ukaz.category.label
+  //       );
+  //       const values = data.value.map((v) => (v !== null ? v : 0)); // Handle null values
+
+  //       setGraphData({
+  //         labels: labels,
+  //         datasets: .map((fuelType, index) => ({
+  //           label: fuelType,
+  //           data: values[index], // Assuming each value is for a different fuel type
+  //           borderColor: `rgba(${index * 50}, ${index * 100}, 200, 1)`,
+  //           backgroundColor: `rgba(${index * 50}, ${index * 100}, 200, 0.2)`,
+  //           fill: true,
 
   const options = {
     responsive: true,
@@ -83,13 +115,18 @@ export default function PriceDevelopmentGraph({ data }) {
       },
     },
   };
+  console.log(graphData);
   return (
-    <div>hi</div>
-    /*
-    <div className="chart-container">
-      <h2>Fuel Prices Over Time</h2>
-      {data ? <Line data={data} options={options} /> : <p>Loading data...</p>}
-    </div>
-    */
+    <>
+      <div>hi</div>
+      <div className="chart-container">
+        <h2>Fuel Prices Over Time</h2>
+        {data ? (
+          <Line data={graphData} options={options} />
+        ) : (
+          <p>Loading data...</p>
+        )}
+      </div>
+    </>
   );
 }

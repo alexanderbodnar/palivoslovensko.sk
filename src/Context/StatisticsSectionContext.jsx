@@ -1,7 +1,13 @@
-import YearlyPricingTable from "./Graphs/YearlyPricingTable";
-import PriceDevelopmentGraph from "./Graphs/PriceDevelopmentGraph";
-import { useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { getDataWithParams } from "../API/monthlyData";
+// Create the context
+const StatisticsSectionContext = createContext();
+
+// Create a custom hook to use the context
+export const useStatisticsSectionContext = () => {
+  return useContext(StatisticsSectionContext);
+};
+
 function generateNumberString(start, end) {
   // Convert start and end to integers
   const startNum = parseInt(start, 10);
@@ -24,19 +30,28 @@ function generateNumberString(start, end) {
   return numbers.join(",");
 }
 
-export default function MainSection() {
-  const [data, setData] = useState([]); // State to hold fetched data
-  const [loading, setLoading] = useState(true); // State to manage loading state
+// Create a provider component
+export const StatisticsSectionProvider = ({ children }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); // State to handle errors
-
   useEffect(() => {
     async function fetchData() {
       try {
+        let currentdate = new Date();
+        let oneJan = new Date(currentdate.getFullYear(), 0, 1);
+        let numberOfDays = Math.floor(
+          (currentdate - oneJan) / (24 * 60 * 60 * 1000)
+        );
+        let resultWeek = Math.ceil(
+          (currentdate.getDay() + 1 + numberOfDays) / 7
+        );
+        console.log(resultWeek);
         const response = await getDataWithParams(
-          generateNumberString("202452", "202401")
+          generateNumberString("2024" + resultWeek.toString(), "202401")
         );
         //"202452,202451,202450,202449,202448,202447"
-        console.log(response);
+        //console.log(response);
         if (!response) throw Error("No data found!");
         setData(response);
       } catch (err) {
@@ -49,19 +64,9 @@ export default function MainSection() {
     fetchData();
   }, []);
 
-  // if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
   return (
-    <span id="main--section">
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className="grid h-full justify-items-center">
-          <YearlyPricingTable data={data} />
-        </div>
-      )}
-    </span>
+    <StatisticsSectionContext.Provider value={{ data, setData, loading }}>
+      {children}
+    </StatisticsSectionContext.Provider>
   );
-}
-// <PriceDevelopmentGraph data={data} />
+};
