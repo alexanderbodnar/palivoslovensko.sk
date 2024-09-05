@@ -7,15 +7,29 @@ from facebook_business.adobjects.adimage import AdImage
 from facebook_business.adobjects.page import Page
 from facebook_business.adobjects.campaign import Campaign
 
+import requests
+
 class FacebookBot:
     def __init__(self, access_token, app_id, app_secret, ad_account_id, page_id):
-        
-        # Initialize the API with the app credentials
         FacebookAdsApi.init(app_id, app_secret, access_token)
         self.ad_account_id  = ad_account_id
         self.page_id        = page_id
+        self.access_token   = access_token
 
     def create_campaign(self, campaign_name, objective, special_ad_category, status='PAUSED'):
+        """
+        Creates a new Facebook Ad Campaign.
+
+        Args:
+            campaign_name (str): The name of the campaign.
+            objective (str): The objective of the campaign (e.g., 'LINK_CLICKS').
+            special_ad_category (str): Special ad category (e.g., 'NONE').
+            status (str): The status of the campaign (default is 'PAUSED').
+
+        Returns:
+            str: The ID of the created campaign if successful, otherwise None.
+        """
+        
         try:
             campaign = Campaign(parent_id=self.ad_account_id)
             campaign.update({
@@ -33,6 +47,16 @@ class FacebookBot:
             return None
 
     def upload_image(self, image_path):
+        """
+        Uploads an image to Facebook Ad Account.
+
+        Args:
+            image_path (str): The path to the image file to upload.
+
+        Returns:
+            str: The hash of the uploaded image if successful, otherwise None.
+        """
+        
         try:
             image = AdImage(parent_id=self.ad_account_id)
             image[AdImage.Field.filename] = image_path
@@ -45,6 +69,18 @@ class FacebookBot:
             return None
 
     def create_ad_creative(self, ad_name, ad_text, image_hash):
+        """
+        Creates an ad creative for the Facebook Ad.
+
+        Args:
+            ad_name (str): The name of the ad creative.
+            ad_text (str): The text for the ad creative.
+            image_hash (str): The hash of the image to use in the ad.
+
+        Returns:
+            str: The ID of the created ad creative if successful, otherwise None.
+        """
+        
         try:
             creative = AdCreative(parent_id=self.ad_account_id)
             creative[AdCreative.Field.name] = ad_name
@@ -64,6 +100,17 @@ class FacebookBot:
             return None
 
     def create_ad_set(self, campaign_id, ad_set_name):
+        """
+        Creates a new Ad Set under the specified campaign.
+
+        Args:
+            campaign_id (str): The ID of the campaign to which the ad set belongs.
+            ad_set_name (str): The name of the ad set.
+
+        Returns:
+            str: The ID of the created ad set if successful, otherwise None.
+        """
+        
         try:
             ad_set = AdSet(parent_id=self.ad_account_id)
             ad_set.update({
@@ -89,6 +136,19 @@ class FacebookBot:
             return None
 
     def create_ad(self, ad_name, ad_text, image_path, campaign_id):
+        """
+        Creates and publishes a new ad in a specified campaign.
+
+        Args:
+            ad_name (str): The name of the ad.
+            ad_text (str): The text for the ad.
+            image_path (str): The path to the image file to use in the ad.
+            campaign_id (str): The ID of the campaign to which the ad belongs.
+
+        Returns:
+            str: The ID of the created ad if successful, otherwise None.
+        """
+
         try:
             image_hash = self.upload_image(image_path)
             if not image_hash:
@@ -118,6 +178,13 @@ class FacebookBot:
             return None
 
     def get_pages(self):
+        """
+        Retrieves the list of Facebook Pages managed by the user.
+
+        Returns:
+            dict: The list of pages managed by the user, or None if failed.
+        """
+        
         pages = None
         try:
             user = Page(fbid='me')
@@ -131,6 +198,13 @@ class FacebookBot:
         return pages
 
     def get_ad_account(self):
+        """
+        Retrieves information about the Facebook Ad Account.
+
+        Returns:
+            dict: The information of the ad account, or None if failed.
+        """
+        
         account_info = None
         try:
             ad_account = AdAccount(self.ad_account_id)
@@ -142,14 +216,19 @@ class FacebookBot:
         
         return account_info
 
-    """
-    # Get the permissions
     def get_permissions(self):
+        """
+        Retrieves permissions associated with the access token.
+
+        Returns:
+            dict: The permissions associated with the access token, or None if failed.
+        """
+        
         permissions = None
         try:
             url = f"https://graph.facebook.com/v20.0/me/permissions"
             params = {
-                'access_token': access_token
+                'access_token': self.access_token
             }
             response = requests.get(url, params=params)
             data = response.json()
@@ -164,4 +243,3 @@ class FacebookBot:
             print("Failed to retrieve permissions. Error:", str(e))
         
         return permissions
-    """

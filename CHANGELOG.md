@@ -1,3 +1,7 @@
+● 05.09.2024<br>
+    - Implemented the instagram_bot.py which for now covers the image uploading on the IG account
+    - Polished the facebook_bot.py to include function description with args & returns
+    - Restructured the credentials into the config.py from which it will load automatically
 ● 04.09.2024<br>
     - Removed the readme_updater.py & the pipeline for it
     - Created the structure for the facebook&instagram python bots
