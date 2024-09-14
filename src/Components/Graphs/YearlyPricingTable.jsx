@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React from "react";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import { fillWeeksArray } from "./helperFunctions";
@@ -18,53 +19,72 @@ export default function YearlyPricingTable() {
   const { data, loading } = useStatisticsSectionContext();
   if (loading) return <h1>cakaj</h1>;
 
-  let tableHeaders, tableRows;
-  const headers = Object.values(data.dimension.sp0207ts_ukaz.category.label);
-  const weeksArray = fillWeeksArray(data, headers.length);
+  let tableHeaders = data.map((fuel) => {
+    return (
+      <th scope="col" className="px-6 py-4">
+        {fuel.name}
+      </th>
+    );
+  });
+  let measuresArray = data.map((fuel) =>
+    fuel.measuresArray.map((measure) => measure.value)
+  );
+  let weekMeasuresArray = [];
+  for (let week = 0; week < data.length; week++) {
+    const weekArray = [];
 
-  try {
-    tableHeaders = headers.map((el) => {
-      return (
-        <th key={el} className="py-2 px-4 border-b">
-          {el}
-        </th>
-      );
-    });
-    tableRows = weeksArray?.map((week, index) => {
-      return (
-        <tr key={week.weekName}>
-          {formatWeekCaption(week.weekName)}
-          {week?.fuelPrice?.map((price, index2) => {
-            return (
-              <td
-                className="whitespace-nowrap px-2 py-1 text-center"
-                key={`${index}+${index2}`}
-              >
-                {price}
-              </td>
-            );
-          })}
-        </tr>
-      );
-    });
-  } catch (error) {
-    console.log(error.message);
-    console.log(tableHeaders);
+    for (
+      let fuelType = 0;
+      fuelType < data[0].measuresArray.length;
+      fuelType++
+    ) {
+      weekArray.push(measuresArray[week][fuelType]);
+    }
+    weekMeasuresArray.push(weekArray);
   }
 
+  weekMeasuresArray = weekMeasuresArray[0].map((_, colIndex) =>
+    weekMeasuresArray.map((row) => row[colIndex])
+  );
+  const tableRows = weekMeasuresArray.map((week, index1) => {
+    const weekName = data[0].measuresArray[index1].week;
+    return (
+      <tr>
+        <td>{formatWeekCaption(weekName)}</td>
+        {week.map((price, index2) => {
+          return (
+            <td
+              key={`${index1}+${index2}`}
+              className="px-4 py-2 border border-gray-400"
+            >
+              {price}
+            </td>
+          );
+        })}
+      </tr>
+    );
+  });
+
+  console.log(data[0].measuresArray[0]);
   return (
-    <div className="flex w-full relative shadow-md sm:rounded-lg">
-      <table className="table-auto bg-white border border-gray-300 max-h-full overflow-auto max-w-full">
-        <thead>
-          <tr className="bg-gray-200 text-gray-700">
-            <th key="week" className="py-2 px-4 border-b">
-              Tyzden
-            </th>
-            {tableHeaders}
-          </tr>
-        </thead>
-        <tbody>{tableRows}</tbody>
-      </table>
+    <div className="flex flex-col overflow-auto max-h-full">
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+          <div className="overflow-hidden">
+            <table className="min-w-full text-left text-sm font-light">
+              <thead className="border-b font-medium dark:border-neutral-500">
+                <tr>
+                  <th scope="col" className="px-6 py-4">
+                    {t("")}
+                  </th>
+                  {tableHeaders}
+                </tr>
+              </thead>
+              <tbody>{tableRows}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

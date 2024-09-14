@@ -12,12 +12,10 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useContext } from "react";
+
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import { fillWeeksArray } from "./helperFunctions";
-// import { getDataWithParams } from "../../API/monthlyData";
 
-// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -31,59 +29,20 @@ ChartJS.register(
 export default function PriceDevelopmentGraph() {
   const { data, loading } = useStatisticsSectionContext();
   if (loading) return <h1>vytrimgeno</h1>;
-  // const [graphData, setGraphData] = useState(null);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (data) {
-  //       // Transform data into chart.js format
-  //       const labels = Object.keys(data.dimension.sp0207ts_tyz.category.label);
-  //       const dataset = Object.values(
-  //         data.dimension.sp0207ts_ukaz.category.label
-  //       );
-  //       const values = data.value.map((v) => (v !== null ? v : 0)); // Handle null values
+  // const headers = Object.values(data.dimension.sp0207ts_ukaz.category.label);
+  // const x = fillWeeksArray(data, headers.length);
+  //console.log(data; //.map((el) => el.week));
 
-  //       setGraphData({
-  //         labels: labels,
-  //         datasets: .map((fuelType, index) => ({
-  //           label: fuelType,
-  //           data: values[index], // Assuming each value is for a different fuel type
-  //           borderColor: `rgba(${index * 50}, ${index * 100}, 200, 1)`,
-  //           backgroundColor: `rgba(${index * 50}, ${index * 100}, 200, 0.2)`,
-  //           fill: true,
-  //         })),
-  //       });
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [data]);
-  const headers = Object.values(data.dimension.sp0207ts_ukaz.category.label);
-  const x = fillWeeksArray(data, headers.length);
   const graphData = {
-    labels: headers, // Extract week names for the labels
-
-    datasets: headers.map((fuel, index) => ({
-      label: fuel,
-      data: x.map((el) => el.fuelPrice[index]), // Extract fuel prices for this fuel type
-      borderColor: `rgba(${index * 50}, ${index * 100}, 200, 1)`,
-      backgroundColor: `rgba(${index * 50}, ${index * 100}, 200, 0.2)`,
+    labels: data[0].measuresArray.map((el) => el.week),
+    datasets: data.map((fuel, index) => ({
+      label: fuel.name,
+      data: fuel.measuresArray.map((el) => el.value),
+      borderColor: `rgba(${index * 40}, ${index * 80}, 30, 1)`,
+      backgroundColor: `rgba(${index * 40}, ${index * 80}, 30, 0.2)`,
       fill: true,
     })),
   };
-
-  //       const dataset = Object.values(
-  //         data.dimension.sp0207ts_ukaz.category.label
-  //       );
-  //       const values = data.value.map((v) => (v !== null ? v : 0)); // Handle null values
-
-  //       setGraphData({
-  //         labels: labels,
-  //         datasets: .map((fuelType, index) => ({
-  //           label: fuelType,
-  //           data: values[index], // Assuming each value is for a different fuel type
-  //           borderColor: `rgba(${index * 50}, ${index * 100}, 200, 1)`,
-  //           backgroundColor: `rgba(${index * 50}, ${index * 100}, 200, 0.2)`,
-  //           fill: true,
 
   const options = {
     responsive: true,
@@ -115,18 +74,10 @@ export default function PriceDevelopmentGraph() {
       },
     },
   };
-  console.log(graphData);
+  console.log(data);
   return (
-    <>
-      <div>hi</div>
-      <div className="chart-container">
-        <h2>Fuel Prices Over Time</h2>
-        {data ? (
-          <Line data={graphData} options={options} />
-        ) : (
-          <p>Loading data...</p>
-        )}
-      </div>
-    </>
+    <div className="chart-container h-full">
+      <Line data={graphData} options={options} />
+    </div>
   );
 }

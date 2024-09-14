@@ -1,0 +1,34 @@
+{
+  "navigation": {
+    "statistics": "Statistics",
+    "aboutProject": "About Project",
+    "contact": "Contact",
+    "supportUs": "Support Us",
+    "options": "Settings",
+    "language": "Language"
+  },
+  "sections": {
+    "graph": "Graph",
+    "table": "Table",
+    "dataSource": "Data source:"
+  },
+  "url": {
+    "statistics": "statistics",
+    "aboutProject": "about-project",
+    "contact": "contact",
+    "supportUs": "support-us",
+    "graph": "graph",
+    "table": "table"
+  },
+  "footer": {
+    "techStack": "Tech stack",
+    "contact": "Contact",
+    "sources": "Sources",
+    "descriptionHeader": "About project",
+    "description": "This project was created to help visualize data obtained from the database of the Statistical Office of the Slovak Republic."
+  },
+  "routeNotFound": {
+    "mainText": "Page not found",
+    "buttonText": "Go back home"
+  }
+}

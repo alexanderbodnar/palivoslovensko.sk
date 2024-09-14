@@ -1,33 +1,45 @@
+"use server";
 import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
   Menu,
   MenuButton,
+  MenuItem,
+  MenuItems, // Note: Updated from MenuItem to MenuItems
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import LanguageButton from "../LanguageButton";
 import { NavLink } from "react-router-dom";
-
-const navigation = [
-  { name: "Štatistiky", href: "statistiky" },
-  { name: "O projekte", href: "oprojekte" },
-  { name: "Kontakt", href: "kontakt" },
-  { name: "Podporte nás", href: "podporte-nas" },
-];
+import { useTranslation } from "react-i18next";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NavigationBar({ t, i18n }) {
+export default function NavigationBar() {
+  const { t, i18n } = useTranslation();
+  const navigation = [
+    { name: t("navigation.statistics"), href: "statistiky" },
+    { name: t("navigation.aboutProject"), href: "oprojekte" },
+    { name: t("navigation.contact"), href: "kontakt" },
+    { name: t("navigation.supportUs"), href: "podportenas" },
+  ];
+  function getFlagEmoji(countryCode) {
+    console.log(i18n);
+    const codePoints = countryCode
+      .toUpperCase()
+      .split("")
+      .map((char) => 127397 + char.charCodeAt());
+    return String.fromCodePoint(...codePoints);
+  }
   return (
-    <Disclosure as="nav" className="bg-green-200">
+    <Disclosure as="nav" className="bg-[#F6F6F6] text-[#297A49] shadow-md">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            {/* Mobile menu button*/}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+          <div className="absolute inset-y-0 left-0 flex items-center fle sm:hidden">
+            {/* Mobile menu button */}
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
               <Bars3Icon
@@ -40,15 +52,16 @@ export default function NavigationBar({ t, i18n }) {
               />
             </DisclosureButton>
           </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+          <div className="flex flex-1 md:justify-between items-center justify-center sm:items-stretch">
             <div className="flex flex-shrink-0 items-center">
               <img
                 alt="Your Company"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                 className="h-8 w-auto"
               />
+              <h1 className="font-bold">Palivoslovensko.sk</h1>
             </div>
-            <div className="hidden sm:ml-6 sm:block">
+            <div className="hidden sm:ml-6 sm:block justify-end md:justify-end">
               <div className="flex space-x-4">
                 {navigation.map((item) => (
                   <NavLink
@@ -60,27 +73,52 @@ export default function NavigationBar({ t, i18n }) {
                     {item.name}
                   </NavLink>
                 ))}
+                <div className="px-3 py-2 text-sm font-medium">
+                  <Menu as="div" className="relative inline-block text-left">
+                    <MenuButton className="flex ">
+                      <span className="flex px-2">
+                        {t("navigation.language")}
+                      </span>
+                      <span className="flex" id="flag-emoji">
+                        {getFlagEmoji(i18n.language)}
+                      </span>
+                    </MenuButton>
+
+                    <MenuItems
+                      transition
+                      className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    >
+                      <div className="py-1">
+                        <MenuItem>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
+                          >
+                            <LanguageButton
+                              code="sk"
+                              language="Slovensky"
+                              i18n={i18n}
+                            />
+                          </a>
+                        </MenuItem>
+                        <MenuItem>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
+                          >
+                            <LanguageButton
+                              code="en"
+                              language="English"
+                              i18n={i18n}
+                            />
+                          </a>
+                        </MenuItem>
+                      </div>
+                    </MenuItems>
+                  </Menu>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <LanguageButton code="sk" language="Slovensky" i18n={i18n} />
-            ;
-            <LanguageButton code="en" language="English" i18n={i18n} />;
-            {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
-              <div>
-                <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    className="h-8 w-8 rounded-full"
-                  />
-                </MenuButton>
-              </div>
-            </Menu>
           </div>
         </div>
       </div>
@@ -93,12 +131,7 @@ export default function NavigationBar({ t, i18n }) {
               as="a"
               href={item.href}
               aria-current={item.current ? "page" : undefined}
-              className={classNames(
-                item.current
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                "block rounded-md px-3 py-2 text-base font-medium"
-              )}
+              className="block rounded-md px-3 py-2 text-base font-medium"
             >
               {item.name}
             </DisclosureButton>

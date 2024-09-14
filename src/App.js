@@ -3,36 +3,32 @@ import NavigationBar from "./Components/Common/NavigationBar";
 import FooterSection from "./Components/Common/FooterSection";
 import MainSection from "./Components/Common/MainSection";
 import { useTranslation } from "react-i18next";
-import { Router, Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./i18n";
 import Statistics from "./Components/Pages/Statistics";
-import AboutProject from "./Components/Pages/Statistics";
-import Contact from "./Components/Pages/Statistics";
-import SupportUs from "./Components/Pages/Statistics";
-import { StatisticsSectionProvider } from "./Context/StatisticsSectionContext";
+import AboutProject from "./Components/Pages/AboutProject";
+import ContactUs from "./Components/Pages/ContactUs";
+import SupportUs from "./Components/Pages/SupportUs";
 import PriceDevelopmentGraph from "./Components/Graphs/PriceDevelopmentGraph";
 import YearlyPricingTable from "./Components/Graphs/YearlyPricingTable";
-import RouteNotFound from "./Components/Pages/RouteNotFound";
+import RouteNotFound from "./Components/Common/RouteNotFound";
 
 function App() {
   const { t, i18n } = useTranslation();
-  // <Route path="grafy" element={PriceDevelopmentGraph} />
+
   return (
     <div className="App">
-      <NavigationBar t={t} i18n={i18n} />
+      <NavigationBar />
 
-      <MainSection>
-        <Routes>
-          <Route path="/statistiky" element={<Statistics />}>
-            <Route path="tabulka" element={<YearlyPricingTable />} />
-            <Route path="graf" element={<PriceDevelopmentGraph />} />
-          </Route>
-          <Route path="/oprojekte" element={<AboutProject />} />
-          <Route path="/kontakt" element={<Contact />} />
-          <Route path="/podporte-nas" element={<SupportUs />} />
-          <Route path="*" element={<RouteNotFound />} />
-        </Routes>
-      </MainSection>
+      <Routes>
+        <Route path="/" element={<MainSection />}>
+          <Route path="statistiky" element={<Statistics />} />
+          <Route path="oprojekte" element={<AboutProject />} />
+          <Route path="kontakt" element={<ContactUs />} />
+          <Route path="podportenas" element={<SupportUs />} />
+        </Route>
+        <Route path="*" element={<RouteNotFound />} />
+      </Routes>
 
       <FooterSection />
     </div>

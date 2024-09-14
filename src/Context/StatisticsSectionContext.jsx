@@ -1,4 +1,6 @@
+import { use } from "i18next";
 import { createContext, useContext, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { getDataWithParams } from "../API/monthlyData";
 // Create the context
 const StatisticsSectionContext = createContext();
@@ -30,31 +32,75 @@ function generateNumberString(start, end) {
   return numbers.join(",");
 }
 
+function processApiData(response) {
+  const fuelObjectsArray = [];
+  const fuelsArray = Object.values(
+    response.dimension.sp0207ts_ukaz.category.label
+  );
+  const numberOfFuels = fuelsArray.length;
+  const numberOfMeasures = response.value.length;
+
+  const weeksArray = Object.values(
+    response.dimension.sp0207ts_tyz.category.label
+  );
+
+  fuelsArray.forEach((fuel, index1) => {
+    const fuelMeasures = [];
+    let indexOfWeek = 0;
+    for (
+      let index2 = index1;
+      index2 < numberOfMeasures;
+      index2 = index2 + numberOfFuels
+    ) {
+      fuelMeasures.push({
+        week: weeksArray[indexOfWeek],
+        value: response.value[index2] ? response.value[index2] : "X",
+      });
+      indexOfWeek++;
+    }
+    fuelObjectsArray.push({
+      name: fuel,
+      measuresArray: fuelMeasures,
+    });
+  });
+  return fuelObjectsArray;
+}
+
+function calculateWeeks() {
+  let currentdate = new Date();
+  let oneJan = new Date(currentdate.getFullYear(), 0, 1);
+  let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
+  let resultWeek = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
+  return resultWeek.toString();
+}
+
 // Create a provider component
 export const StatisticsSectionProvider = ({ children }) => {
+  const [apiData, setApiData] = useState([]);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // State to handle errors
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [error, setError] = useState(null);
+
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     async function fetchData() {
       try {
-        let currentdate = new Date();
-        let oneJan = new Date(currentdate.getFullYear(), 0, 1);
-        let numberOfDays = Math.floor(
-          (currentdate - oneJan) / (24 * 60 * 60 * 1000)
-        );
-        let resultWeek = Math.ceil(
-          (currentdate.getDay() + 1 + numberOfDays) / 7
-        );
-        console.log(resultWeek);
+        const resultWeek = calculateWeeks();
         const response = await getDataWithParams(
-          generateNumberString("2024" + resultWeek.toString(), "202401")
+          generateNumberString(year + resultWeek, `${year}01`),
+          "all",
+          i18n.language
         );
-        //"202452,202451,202450,202449,202448,202447"
-        //console.log(response);
+
         if (!response) throw Error("No data found!");
-        setData(response);
+
+        setApiData(processApiData(response));
+        setData(processApiData(response));
       } catch (err) {
+        console.log(err.message);
+
         setError(err);
       } finally {
         setLoading(false);
@@ -62,10 +108,12 @@ export const StatisticsSectionProvider = ({ children }) => {
     }
 
     fetchData();
-  }, []);
+  }, [t, year]);
 
   return (
-    <StatisticsSectionContext.Provider value={{ data, setData, loading }}>
+    <StatisticsSectionContext.Provider
+      value={{ apiData, data, setData, loading, year, setYear }}
+    >
       {children}
     </StatisticsSectionContext.Provider>
   );
