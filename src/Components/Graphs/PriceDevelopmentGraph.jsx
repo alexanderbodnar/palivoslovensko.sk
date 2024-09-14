@@ -14,7 +14,8 @@ import {
 } from "chart.js";
 
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
-import { fillWeeksArray } from "./helperFunctions";
+import { useTranslation } from "react-i18next";
+import Spinner from "../Common/Spinner";
 
 ChartJS.register(
   CategoryScale,
@@ -28,10 +29,8 @@ ChartJS.register(
 
 export default function PriceDevelopmentGraph() {
   const { data, loading } = useStatisticsSectionContext();
-  if (loading) return <h1>vytrimgeno</h1>;
-  // const headers = Object.values(data.dimension.sp0207ts_ukaz.category.label);
-  // const x = fillWeeksArray(data, headers.length);
-  //console.log(data; //.map((el) => el.week));
+  const { t } = useTranslation();
+  if (loading) return <Spinner />;
 
   const graphData = {
     labels: data[0].measuresArray.map((el) => el.week),
@@ -62,21 +61,20 @@ export default function PriceDevelopmentGraph() {
       x: {
         title: {
           display: true,
-          text: "Week",
+          text: t("common.week"),
         },
       },
       y: {
         title: {
           display: true,
-          text: "Value",
+          text: t("common.value"),
         },
         beginAtZero: true,
       },
     },
   };
-  console.log(data);
   return (
-    <div className="chart-container h-full">
+    <div className="chart-container max-h-full max-w-full min-h-full min-w-full">
       <Line data={graphData} options={options} />
     </div>
   );

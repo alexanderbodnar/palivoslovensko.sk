@@ -9,6 +9,24 @@ module.exports = {
         darkPrimary: "7F9172", // Dark theme primary color
         darkSecondary: "567568", // Dark theme secondary color
       },
+      fontFamily: {
+        sans: [
+          "font-mono",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Liberation Mono",
+          "Courier New",
+          "monospace",
+        ],
+      },
+      fontSize: {
+        base: "18px", // Increase the base font size
+        lg: "20px",
+        xl: "24px",
+      },
     },
   },
   plugins: [],

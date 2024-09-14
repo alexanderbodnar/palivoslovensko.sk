@@ -1,4 +1,12 @@
 {
+  "common": {
+    "fuelName": "Palivo",
+    "show": "Zobraziť",
+    "price": "Cena",
+    "week": "Týždeň",
+    "selectYear": "Zvoliť rok",
+    "value": "Hodnota"
+  },
   "navigation": {
     "statistics": "Štatistiky",
     "aboutProject": "O projekte",
@@ -10,7 +18,7 @@
   "sections": {
     "graph": "Graf",
     "table": "Tabuľka",
-    "dataSource": "Zdroj dát"
+    "dataSource": "Zdroj dát: "
   },
   "url": {
     "statistics": "statistiky",
@@ -30,5 +38,16 @@
   "routeNotFound": {
     "mainText": "Stránka nebola nájdená",
     "buttonText": "Vrátiť sa naspäť"
+  },
+  "statistics": {
+    "yearlyPricingTable": "Cena palív",
+    "priceDevelopmentGraph": "Vývoj palív",
+    "checkboxHeader": "Zobraziť palivá",
+    "maxRecords": "Najvyššie ceny",
+    "minRecords": "Najnižšie ceny"
+  },
+  "landingPage": {
+    "goToStatistics": "Prejsť na štatistiky",
+    "welcome": "Vítajte"
   }
 }

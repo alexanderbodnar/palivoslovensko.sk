@@ -12,10 +12,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import LanguageButton from "../LanguageButton";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import logo from "../../public/logo.png";
 
 export default function NavigationBar() {
   const { t, i18n } = useTranslation();
@@ -26,7 +23,6 @@ export default function NavigationBar() {
     { name: t("navigation.supportUs"), href: "podportenas" },
   ];
   function getFlagEmoji(countryCode) {
-    console.log(i18n);
     const codePoints = countryCode
       .toUpperCase()
       .split("")
@@ -39,7 +35,7 @@ export default function NavigationBar() {
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center fle sm:hidden">
             {/* Mobile menu button */}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 hover:bg-neutral-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
               <Bars3Icon
@@ -54,12 +50,8 @@ export default function NavigationBar() {
           </div>
           <div className="flex flex-1 md:justify-between items-center justify-center sm:items-stretch">
             <div className="flex flex-shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
-              <h1 className="font-bold">Palivoslovensko.sk</h1>
+              <img alt="PalivoSlovensko" src={logo} className="h-8 w-auto" />
+              <h1 className="font-bold text-lg">Palivoslovensko.sk</h1>
             </div>
             <div className="hidden sm:ml-6 sm:block justify-end md:justify-end">
               <div className="flex space-x-4">
@@ -68,12 +60,12 @@ export default function NavigationBar() {
                     key={item.name}
                     to={item.href}
                     aria-current={item.current ? "page" : undefined}
-                    className="px-3 py-2 text-sm font-medium"
+                    className="px-3 py-2 font-medium text-lg"
                   >
                     {item.name}
                   </NavLink>
                 ))}
-                <div className="px-3 py-2 text-sm font-medium">
+                <div className="px-3 py-2 text-lg font-medium">
                   <Menu as="div" className="relative inline-block text-left">
                     <MenuButton className="flex ">
                       <span className="flex px-2">
@@ -90,28 +82,22 @@ export default function NavigationBar() {
                     >
                       <div className="py-1">
                         <MenuItem>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
-                          >
+                          <span className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
                             <LanguageButton
                               code="sk"
                               language="Slovensky"
                               i18n={i18n}
                             />
-                          </a>
+                          </span>
                         </MenuItem>
                         <MenuItem>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
-                          >
+                          <span className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
                             <LanguageButton
                               code="en"
                               language="English"
                               i18n={i18n}
                             />
-                          </a>
+                          </span>
                         </MenuItem>
                       </div>
                     </MenuItems>

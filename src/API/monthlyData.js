@@ -8,7 +8,6 @@ export const getDataWithParams = async (
   const response = await fetch(
     `${apiURL}${week}/${fuel}?lang=${lang}&type=json`
   );
-  console.log(`${apiURL}${week}/${fuel}?lang=${lang}&type=json`);
   const result = await response.json();
   return result;
 };

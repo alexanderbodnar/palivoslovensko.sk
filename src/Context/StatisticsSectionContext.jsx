@@ -1,4 +1,3 @@
-import { use } from "i18next";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getDataWithParams } from "../API/monthlyData";

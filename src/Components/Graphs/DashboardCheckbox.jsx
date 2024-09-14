@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Spinner from "../Common/Spinner";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
+import { t } from "i18next";
 
 const DashboardCheckbox = () => {
-  const { apiData, data, loading, year, setYear, setData } =
+  const { apiData, loading, year, setYear, setData } =
     useStatisticsSectionContext();
   const [selectedOptions, setSelectedOptions] = useState({});
   const [formYear, setFormYear] = useState(year);
@@ -43,16 +44,15 @@ const DashboardCheckbox = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1>Vyberte si palivo</h1>
       <form
         className="w-full max-h-full group cursor-default select-none py-2 pl-3 pr-9 text-gray-900"
         onSubmit={handleSubmit} // Handle form submission
       >
-        <div className="z-10 mt-1 max-h-56 w-full overflow-auto rounded bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+        <div className="z-10 mt-1 max-h-56 w-full overflow-auto rounded bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-hidden">
           {apiData.map((fuel) => (
             <label
               key={fuel.name}
-              className="flex justify-between hover:bg-neutral-200 ml-3 block truncate font-normal flex-row-reverse items-center space-x-3"
+              className="flex justify-between hover:bg-neutral-200 ml-3 block truncate font-normal flex-row-reverse items-center space-x-3 "
             >
               <input
                 type="checkbox"
@@ -67,7 +67,7 @@ const DashboardCheckbox = () => {
         </div>
         <div className="flex mt-4">
           <label className="block text-gray-700 font-bold mb-2">
-            Select Year:
+            {t("common.selectYear")}
           </label>
           <input
             type="number"
@@ -82,7 +82,7 @@ const DashboardCheckbox = () => {
           type="submit"
           className="bg-sky-500 hover:bg-sky-700 rounded px-2 my-2"
         >
-          Search
+          {t("common.show")}
         </button>
       </form>
     </div>
