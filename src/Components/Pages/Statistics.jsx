@@ -1,0 +1,120 @@
+import { StatisticsSectionProvider } from "../../Context/StatisticsSectionContext";
+import { useTranslation } from "react-i18next";
+import DashboardCheckbox from "../Graphs/DashboardCheckbox";
+import PriceDevelopmentGraph from "../Graphs/PriceDevelopmentGraph";
+import YearlyPricingTable from "../Graphs/YearlyPricingTable";
+import RecordsTable from "../Graphs/RecordsTable";
+
+export default function Statistics() {
+  const { t } = useTranslation();
+  const headerStyle = "font-bold text-lg tracking-wide";
+
+  return (
+    <StatisticsSectionProvider>
+      <main
+        className="m-2 gap-4 grid grid-cols-1 md:grid-cols-3 auto-rows-min" // Responsive grid for mobile
+        style={{ gridTemplateRows: "auto auto auto" }}
+      >
+        {/* Fuel Selection Section */}
+        <div
+          className="border-2 rounded overflow-auto"
+          aria-labelledby="fuel-selection-heading"
+          style={{ maxHeight: "40vh" }}
+        >
+          <header className="text-center bg-neutral-100">
+            <h2
+              className={`${headerStyle} text-base md:text-lg`}
+              id="fuel-selection-heading"
+            >
+              {t("statistics.checkboxHeader")}
+            </h2>
+          </header>
+          <DashboardCheckbox />
+        </div>
+
+        {/* Records div */}
+        <div
+          className="border-2 rounded overflow-auto"
+          aria-labelledby="max-records-heading"
+          role="region"
+          style={{ maxHeight: "40vh" }}
+        >
+          <header className="text-center bg-neutral-100">
+            <h2
+              className={`${headerStyle} text-base md:text-lg`}
+              id="max-records-heading"
+            >
+              {t("statistics.maxRecords")}
+            </h2>
+          </header>
+          <RecordsTable type="max" />
+        </div>
+
+        <div
+          className="border-2 rounded overflow-auto"
+          aria-labelledby="min-records-heading"
+          role="region"
+          style={{ maxHeight: "40vh" }}
+        >
+          <header className="text-center bg-neutral-100">
+            <h2
+              className={`${headerStyle} text-base md:text-lg`}
+              id="min-records-heading"
+            >
+              {t("statistics.minRecords")}
+            </h2>
+          </header>
+          <RecordsTable type="min" />
+        </div>
+
+        {/* Graph div */}
+        <div
+          className="border-2 rounded col-span-1 md:col-span-3 max-w-full"
+          aria-labelledby="price-development-graph-heading"
+          role="region"
+        >
+          <header className="text-center bg-neutral-100">
+            <h2
+              className={`${headerStyle} text-base md:text-lg`}
+              id="price-development-graph-heading"
+            >
+              {t("statistics.priceDevelopmentGraph")}
+            </h2>
+          </header>
+          <PriceDevelopmentGraph />
+        </div>
+
+        {/* Yearly Pricing Table */}
+        <div
+          className="border-2 rounded col-span-1 md:col-span-3"
+          aria-labelledby="yearly-pricing-table-heading"
+          role="region"
+          style={{ maxHeight: "55vh" }}
+        >
+          <header className="text-center bg-neutral-100">
+            <h2
+              className={`${headerStyle} text-base md:text-lg`}
+              id="yearly-pricing-table-heading"
+            >
+              {t("statistics.yearlyPricingTable")}
+            </h2>
+          </header>
+          <YearlyPricingTable />
+        </div>
+      </main>
+
+      <footer id="source" className="m-4" aria-labelledby="data-source-heading">
+        <p>
+          {t("sections.dataSource")}
+          <a
+            id="data-source"
+            className="font-bold"
+            href="http://www.statistics.sk/"
+          >
+            http://www.statistics.sk/
+          </a>
+        </p>
+      </footer>
+    </StatisticsSectionProvider>
+  );
+}

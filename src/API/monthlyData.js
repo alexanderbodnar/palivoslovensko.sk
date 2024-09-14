@@ -1,8 +1,13 @@
-const apiStart = `https://data.statistics.sk/api/v2/dataset/sp0207ts/`;
-const apiEnd = "?lang=sk&type=json";
+const apiURL = `https://data.statistics.sk/api/v2/dataset/sp0207ts/`;
 
-export const getDataWithParams = async (week = "all", fuel = "all") => {
-  const response = await fetch(`${apiStart}${week}/${fuel}${apiEnd}`);
+export const getDataWithParams = async (
+  week = "all",
+  fuel = "all",
+  lang = "sk"
+) => {
+  const response = await fetch(
+    `${apiURL}${week}/${fuel}?lang=${lang}&type=json`
+  );
   const result = await response.json();
   return result;
 };

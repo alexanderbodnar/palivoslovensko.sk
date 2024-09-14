@@ -1,0 +1,53 @@
+{
+  "common": {
+    "fuelName": "Fuel",
+    "show": "Show",
+    "price": "Price",
+    "week": "Week",
+    "selectYear": "Select Year",
+    "value": "Value"
+  },
+  "navigation": {
+    "statistics": "Statistics",
+    "aboutProject": "About the Project",
+    "contact": "Contact",
+    "supportUs": "Support Us",
+    "options": "Settings",
+    "language": "Language"
+  },
+  "sections": {
+    "graph": "Graph",
+    "table": "Table",
+    "dataSource": "Data Source: "
+  },
+  "url": {
+    "statistics": "statistics",
+    "aboutProject": "about-project",
+    "contact": "contact",
+    "supportUs": "support-us",
+    "graph": "graph",
+    "table": "table"
+  },
+  "footer": {
+    "techStack": "Technologies",
+    "contact": "Contact",
+    "sources": "Sources",
+    "descriptionHeader": "About the Project",
+    "description": "This project was created as a tool to visualize data obtained from the database of the Statistical Office of the Slovak Republic."
+  },
+  "routeNotFound": {
+    "mainText": "Page not found",
+    "buttonText": "Go back"
+  },
+  "statistics": {
+    "yearlyPricingTable": "Fuel prices",
+    "priceDevelopmentGraph": "Fuel development",
+    "checkboxHeader": "Show fuels",
+    "maxRecords": "Highest Prices",
+    "minRecords": "Lowest Prices"
+  },
+  "landingPage": {
+    "goToStatistics": "Go to the statistics",
+    "welcome": "Welcome"
+  }
+}

@@ -12,9 +12,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-// import { getDataWithParams } from "../../API/monthlyData";
 
-// Register Chart.js components
+import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
+import { useTranslation } from "react-i18next";
+import Spinner from "../Common/Spinner";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -25,33 +27,21 @@ ChartJS.register(
   Legend
 );
 
-export default function PriceDevelopmentGraph({ data }) {
-  // const [graphData, setGraphData] = useState(null);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (data) {
-  //       // Transform data into chart.js format
-  //       const labels = Object.keys(data.dimension.sp0207ts_tyz.category.label);
-  //       const dataset = Object.values(
-  //         data.dimension.sp0207ts_ukaz.category.label
-  //       );
-  //       const values = data.value.map((v) => (v !== null ? v : 0)); // Handle null values
+export default function PriceDevelopmentGraph() {
+  const { data, loading } = useStatisticsSectionContext();
+  const { t } = useTranslation();
+  if (loading) return <Spinner />;
 
-  //       setGraphData({
-  //         labels: labels,
-  //         datasets: .map((fuelType, index) => ({
-  //           label: fuelType,
-  //           data: values[index], // Assuming each value is for a different fuel type
-  //           borderColor: `rgba(${index * 50}, ${index * 100}, 200, 1)`,
-  //           backgroundColor: `rgba(${index * 50}, ${index * 100}, 200, 0.2)`,
-  //           fill: true,
-  //         })),
-  //       });
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [data]);
+  const graphData = {
+    labels: data[0].measuresArray.map((el) => el.week),
+    datasets: data.map((fuel, index) => ({
+      label: fuel.name,
+      data: fuel.measuresArray.map((el) => el.value),
+      borderColor: `rgba(${index * 40}, ${index * 80}, 30, 1)`,
+      backgroundColor: `rgba(${index * 40}, ${index * 80}, 30, 0.2)`,
+      fill: true,
+    })),
+  };
 
   const options = {
     responsive: true,
@@ -71,25 +61,21 @@ export default function PriceDevelopmentGraph({ data }) {
       x: {
         title: {
           display: true,
-          text: "Week",
+          text: t("common.week"),
         },
       },
       y: {
         title: {
           display: true,
-          text: "Value",
+          text: t("common.value"),
         },
         beginAtZero: true,
       },
     },
   };
   return (
-    <div>hi</div>
-    /*
-    <div className="chart-container">
-      <h2>Fuel Prices Over Time</h2>
-      {data ? <Line data={data} options={options} /> : <p>Loading data...</p>}
+    <div className="chart-container max-h-full max-w-full min-h-full min-w-full">
+      <Line data={graphData} options={options} />
     </div>
-    */
   );
 }

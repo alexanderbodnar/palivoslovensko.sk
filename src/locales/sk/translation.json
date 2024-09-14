@@ -1,0 +1,53 @@
+{
+  "common": {
+    "fuelName": "Palivo",
+    "show": "Zobraziť",
+    "price": "Cena",
+    "week": "Týždeň",
+    "selectYear": "Zvoliť rok",
+    "value": "Hodnota"
+  },
+  "navigation": {
+    "statistics": "Štatistiky",
+    "aboutProject": "O projekte",
+    "contact": "Kontakt",
+    "supportUs": "Podporte nás",
+    "options": "Nastavenia",
+    "language": "Jazyk"
+  },
+  "sections": {
+    "graph": "Graf",
+    "table": "Tabuľka",
+    "dataSource": "Zdroj dát: "
+  },
+  "url": {
+    "statistics": "statistiky",
+    "aboutProject": "o-projekte",
+    "contact": "kontakt",
+    "supportUs": "podporte-nas",
+    "graph": "graf",
+    "table": "tabulka"
+  },
+  "footer": {
+    "techStack": "Technológie",
+    "contact": "Kontakt",
+    "sources": "Zdroje",
+    "descriptionHeader": "O projekte",
+    "description": "Tento projekt vznikol ako pomôcka k vizualizácií dát získaných z databázy štatistického úradu Slovenskej republiky."
+  },
+  "routeNotFound": {
+    "mainText": "Stránka nebola nájdená",
+    "buttonText": "Vrátiť sa naspäť"
+  },
+  "statistics": {
+    "yearlyPricingTable": "Cena palív",
+    "priceDevelopmentGraph": "Vývoj palív",
+    "checkboxHeader": "Zobraziť palivá",
+    "maxRecords": "Najvyššie ceny",
+    "minRecords": "Najnižšie ceny"
+  },
+  "landingPage": {
+    "goToStatistics": "Prejsť na štatistiky",
+    "welcome": "Vítajte"
+  }
+}
