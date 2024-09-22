@@ -44,7 +44,8 @@
     "priceDevelopmentGraph": "Vývoj palív",
     "checkboxHeader": "Zobraziť palivá",
     "maxRecords": "Najvyššie ceny",
-    "minRecords": "Najnižšie ceny"
+    "minRecords": "Najnižšie ceny",
+    "comparision": "Tento týždeň"
   },
   "landingPage": {
     "goToStatistics": "Prejsť na štatistiky",

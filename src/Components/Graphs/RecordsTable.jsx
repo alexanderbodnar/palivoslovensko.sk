@@ -8,18 +8,26 @@ function getFuelWithMaxOrMinValue(fuelArray, type) {
     throw new Error("Invalid input: type must be 'max' or 'min'");
   }
 
-  return fuelArray.map((fuel) => {
+  return fuelArray?.map((fuel) => {
     const validMeasures = fuel.measuresArray.filter(
       (measure) => typeof measure.value === "number"
     );
 
-    const desiredMeasure = validMeasures.reduce((acc, current) => {
-      if (type === "max") {
-        return current.value > acc.value ? current : acc;
-      } else {
-        return current.value < acc.value ? current : acc;
-      }
-    });
+    if (validMeasures.length === 0) {
+      // If no valid measures, return empty values to avoid errors
+      return { name: fuel.name, value: null, week: null };
+    }
+
+    const desiredMeasure = validMeasures.reduce(
+      (acc, current) => {
+        if (type === "max") {
+          return current.value > acc.value ? current : acc;
+        } else {
+          return current.value < acc.value ? current : acc;
+        }
+      },
+      validMeasures[0] // Initial value to prevent empty array errors
+    );
 
     return {
       name: fuel.name,
@@ -31,14 +39,10 @@ function getFuelWithMaxOrMinValue(fuelArray, type) {
 
 export default function RecordsTable({ type }) {
   const { data, loading } = useStatisticsSectionContext();
-
-  const processedData = useMemo(
-    () => getFuelWithMaxOrMinValue(data, type),
-    [data, type]
-  );
   const { t } = useTranslation();
-  if (loading) return <Spinner />;
 
+  if (loading) return <Spinner />;
+  const processedData = getFuelWithMaxOrMinValue(data, type);
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border-collapse table-auto">
@@ -50,7 +54,7 @@ export default function RecordsTable({ type }) {
           </tr>
         </thead>
         <tbody>
-          {processedData.map((fuel, index) => (
+          {processedData?.map((fuel, index) => (
             <tr
               key={index}
               className={`border-t ${
@@ -58,8 +62,12 @@ export default function RecordsTable({ type }) {
               }`}
             >
               <td className="px-4 py-2">{fuel.name}</td>
-              <td className="px-4 py-2">{fuel.value}</td>
-              <td className="px-4 py-2">{fuel.week}</td>
+              <td className="px-4 py-2">
+                {fuel.value !== null ? fuel.value : "N/A"}
+              </td>
+              <td className="px-4 py-2">
+                {fuel.week !== null ? fuel.week : "N/A"}
+              </td>
             </tr>
           ))}
         </tbody>

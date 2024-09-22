@@ -44,7 +44,8 @@
     "priceDevelopmentGraph": "Fuel development",
     "checkboxHeader": "Show fuels",
     "maxRecords": "Highest Prices",
-    "minRecords": "Lowest Prices"
+    "minRecords": "Lowest Prices",
+    "comparision": "This week"
   },
   "landingPage": {
     "goToStatistics": "Go to the statistics",
