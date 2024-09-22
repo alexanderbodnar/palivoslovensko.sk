@@ -11,7 +11,7 @@ export default function LandingPage() {
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <a
             href="statistiky"
-            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="animate-bounce rounded-md text-lg font-semibold bg-indigo-600 bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 p-4"
           >
             {t("landingPage.goToStatistics")}
           </a>

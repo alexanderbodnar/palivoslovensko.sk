@@ -21,7 +21,7 @@ export default function YearlyPricingTable() {
 
   if (loading) return <Spinner></Spinner>;
 
-  const tableHeaders = data.map((fuel) => (
+  const tableHeaders = data?.map((fuel) => (
     <th
       scope="col"
       className="px-6 py-3  bg-white z-10 border-b"
@@ -31,8 +31,8 @@ export default function YearlyPricingTable() {
     </th>
   ));
 
-  const measuresArray = data.map((fuel) =>
-    fuel.measuresArray.map((measure) => measure.value)
+  const measuresArray = data?.map((fuel) =>
+    fuel.measuresArray?.map((measure) => measure.value)
   );
 
   let weekMeasuresArray = [];
@@ -48,18 +48,18 @@ export default function YearlyPricingTable() {
     weekMeasuresArray.push(weekArray);
   }
 
-  weekMeasuresArray = weekMeasuresArray[0].map((_, colIndex) =>
-    weekMeasuresArray.map((row) => row[colIndex])
+  weekMeasuresArray = weekMeasuresArray[0]?.map((_, colIndex) =>
+    weekMeasuresArray?.map((row) => row[colIndex])
   );
 
-  const tableRows = weekMeasuresArray.map((week, index1) => {
+  const tableRows = weekMeasuresArray?.map((week, index1) => {
     const weekName = data[0].measuresArray[index1].week;
     return (
       <tr key={weekName} className="even:bg-gray-100">
         <th scope="row" className="px-4 py-2 text-left border-r">
           {formatWeekCaption(weekName)}
         </th>
-        {week.map((price, index2) => (
+        {week?.map((price, index2) => (
           <td key={`${index1}-${index2}`} className="px-4 py-2 border">
             {price || "-"}
           </td>

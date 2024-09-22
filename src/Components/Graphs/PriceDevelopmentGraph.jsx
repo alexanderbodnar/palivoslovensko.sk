@@ -33,10 +33,10 @@ export default function PriceDevelopmentGraph() {
   if (loading) return <Spinner />;
 
   const graphData = {
-    labels: data[0].measuresArray.map((el) => el.week),
-    datasets: data.map((fuel, index) => ({
+    labels: data[0].measuresArray?.map((el) => el.week),
+    datasets: data?.map((fuel, index) => ({
       label: fuel.name,
-      data: fuel.measuresArray.map((el) => el.value),
+      data: fuel.measuresArray?.map((el) => el.value),
       borderColor: `rgba(${index * 40}, ${index * 80}, 30, 1)`,
       backgroundColor: `rgba(${index * 40}, ${index * 80}, 30, 0.2)`,
       fill: true,

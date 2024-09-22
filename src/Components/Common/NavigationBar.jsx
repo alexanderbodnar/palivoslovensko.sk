@@ -26,7 +26,7 @@ export default function NavigationBar() {
     const codePoints = countryCode
       .toUpperCase()
       .split("")
-      .map((char) => 127397 + char.charCodeAt());
+      ?.map((char) => 127397 + char.charCodeAt());
     return String.fromCodePoint(...codePoints);
   }
   return (

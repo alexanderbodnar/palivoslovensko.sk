@@ -4,6 +4,7 @@ import DashboardCheckbox from "../Graphs/DashboardCheckbox";
 import PriceDevelopmentGraph from "../Graphs/PriceDevelopmentGraph";
 import YearlyPricingTable from "../Graphs/YearlyPricingTable";
 import RecordsTable from "../Graphs/RecordsTable";
+import CurrentWeek from "../Common/CurrentWeek";
 
 export default function Statistics() {
   const { t } = useTranslation();
@@ -65,6 +66,22 @@ export default function Statistics() {
             </h2>
           </header>
           <RecordsTable type="min" />
+        </div>
+
+        <div
+          className="border-2 rounded col-span-1 md:col-span-3"
+          aria-labelledby="comparision-to-last-week"
+          role="region"
+        >
+          <header className="text-center bg-neutral-100">
+            <h2
+              className={`${headerStyle} text-base md:text-lg`}
+              id="comparision-to-last-week"
+            >
+              {t("statistics.comparision")}
+            </h2>
+          </header>
+          <CurrentWeek />
         </div>
 
         {/* Graph div */}
