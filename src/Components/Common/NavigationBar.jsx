@@ -65,44 +65,41 @@ export default function NavigationBar() {
                     {item.name}
                   </NavLink>
                 ))}
-                <div className="px-3 py-2 text-lg font-medium">
-                  <Menu as="div" className="relative inline-block text-left">
-                    <MenuButton className="flex ">
-                      <span className="flex px-2">
-                        {t("navigation.language")}
-                      </span>
-                      <span className="flex" id="flag-emoji">
-                        {getFlagEmoji(i18n.language)}
-                      </span>
-                    </MenuButton>
-
-                    <MenuItems
-                      transition
-                      className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                    >
-                      <div className="py-1">
-                        <MenuItem>
-                          <span className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
-                            <LanguageButton
-                              code="sk"
-                              language="Slovensky"
-                              i18n={i18n}
-                            />
-                          </span>
-                        </MenuItem>
-                        <MenuItem>
-                          <span className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
-                            <LanguageButton
-                              code="en"
-                              language="English"
-                              i18n={i18n}
-                            />
-                          </span>
-                        </MenuItem>
-                      </div>
-                    </MenuItems>
-                  </Menu>
-                </div>
+                <Menu as="div" className="px-3 py-2 font-medium text-lg">
+                  <MenuButton className="flex ">
+                    <span className="flex px-2">
+                      {t("navigation.language")}
+                    </span>
+                    <span className="flex" id="flag-emoji">
+                      {getFlagEmoji(i18n.language)}
+                    </span>
+                  </MenuButton>
+                  <MenuItems
+                    transition
+                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                  >
+                    <div className="py-1">
+                      <MenuItem>
+                        <span className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
+                          <LanguageButton
+                            code="sk"
+                            language="Slovensky"
+                            i18n={i18n}
+                          />
+                        </span>
+                      </MenuItem>
+                      <MenuItem>
+                        <span className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
+                          <LanguageButton
+                            code="en"
+                            language="English"
+                            i18n={i18n}
+                          />
+                        </span>
+                      </MenuItem>
+                    </div>
+                  </MenuItems>
+                </Menu>
               </div>
             </div>
           </div>
@@ -122,6 +119,39 @@ export default function NavigationBar() {
               {item.name}
             </DisclosureButton>
           ))}
+
+          <Menu
+            as="div"
+            className="block rounded-md px-3 py-2 text-base font-medium"
+          >
+            <MenuButton className="flex ">
+              <span className="flex">{t("navigation.language")}</span>
+              <span className="flex px-2" id="flag-emoji">
+                {getFlagEmoji(i18n.language)}
+              </span>
+            </MenuButton>
+            <MenuItems
+              transition
+              className="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+            >
+              <div className="py-1">
+                <MenuItem>
+                  <span className="block py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
+                    <LanguageButton
+                      code="sk"
+                      language="Slovensky"
+                      i18n={i18n}
+                    />
+                  </span>
+                </MenuItem>
+                <MenuItem>
+                  <span className="block py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900">
+                    <LanguageButton code="en" language="English" i18n={i18n} />
+                  </span>
+                </MenuItem>
+              </div>
+            </MenuItems>
+          </Menu>
         </div>
       </DisclosurePanel>
     </Disclosure>
