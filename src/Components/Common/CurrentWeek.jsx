@@ -3,34 +3,43 @@ import { useMemo } from "react";
 import IncreaseIcon from "../Icons/IncreaseIcon";
 import DecreaseIcon from "../Icons/DecreaseIcon";
 import Spinner from "./Spinner";
-// Helper function to get the two latest weeks
+
 function getTwoLatestWeeks(measuresArray) {
-  // Extract week numbers from the 'week' property
   const parsedWeeks = measuresArray
-    .filter((measure) => measure.value !== "X") // Filter out invalid values
+    .filter((measure) => measure.value !== "X")
     .map((measure) => {
       const weekString = measure.week;
-      const weekNumber = parseInt(weekString.split(".")[0], 10); // Get the week number
+      const weekNumber = parseInt(weekString.split(".")[0], 10);
       return {
         ...measure,
         weekNumber: weekNumber,
       };
     });
 
-  // Sort based on week number in descending order
   const sortedWeeks = parsedWeeks.sort((a, b) => b.weekNumber - a.weekNumber);
-
-  // Ensure there are at least two weeks before accessing elements
   const latestWeek = sortedWeeks[0] || { value: 0, week: "N/A" };
   const previousWeek = sortedWeeks[1] || { value: 0, week: "N/A" };
 
   return { latestWeek, previousWeek };
 }
 
-// Main component
+function getColorsBasedOnStatus(latestWeek, previousWeek) {
+  let bgColorClass = "bg-gradient-to-t from-blue-500 via-blue-400 to-blue-500",
+    textColorClass = "text-blue-800";
+  if (latestWeek.value - previousWeek.value > 0) {
+    bgColorClass = "bg-gradient-to-t from-rose-200 to-rose-300";
+    textColorClass = "text-rose-800";
+  }
+  if (latestWeek.value - previousWeek.value < 0) {
+    bgColorClass = "bg-gradient-to-t from-green-200 to-green-300";
+    textColorClass = "text-green-800";
+  }
+  return [bgColorClass, textColorClass];
+}
+
 export default function CurrentWeek() {
   const { data, loading } = useStatisticsSectionContext();
-  const dateObj = useMemo(() => new Date(), []); // Memoize the date for consistent renders
+  const dateObj = useMemo(() => new Date(), []);
   if (loading) return <Spinner></Spinner>;
 
   const formattedDate = `${dateObj.getDate()}.${
@@ -43,23 +52,24 @@ export default function CurrentWeek() {
         const { latestWeek, previousWeek } = getTwoLatestWeeks(
           fuel.measuresArray
         );
+        const diff = latestWeek.value - previousWeek.value;
 
-        const priceDifference = (latestWeek.value - previousWeek.value).toFixed(
-          2
-        );
+        const priceDifference = diff.toFixed(2);
         const percentageChange = (
           (latestWeek.value / previousWeek.value - 1) *
           100
         ).toFixed(2);
-        const hasIncreased = latestWeek.value - previousWeek.value > 0;
 
-        const bgColorClass = hasIncreased ? "bg-red-200" : "bg-green-200";
-        const textColorClass = hasIncreased ? "text-red-800" : "text-green-800";
+        const [bgColorClass, textColorClass] = getColorsBasedOnStatus(
+          latestWeek,
+          previousWeek
+        );
+        const hasIncreased = diff > 0;
 
         return (
           <div
             key={fuel.name}
-            className={`grid ${bgColorClass} px-2 m-2 rounded`}
+            className={`grid ${bgColorClass} px-2 m-2 rounded max-w-[10%]`}
           >
             <date className="text-slate-400 font-bold text-sm">
               {formattedDate}
@@ -68,14 +78,19 @@ export default function CurrentWeek() {
 
             <span className="font-bold text-xl">{latestWeek.value}€</span>
 
-            {/* Keep priceDifference and percentageChange in one row */}
             <span
               className={`inline-block ${textColorClass} whitespace-nowrap`}
             >
               {`${
-                hasIncreased ? "+" : "-"
+                hasIncreased > 0 ? "+" : "-"
               }${priceDifference}€ (${percentageChange}%)`}
-              {hasIncreased ? <IncreaseIcon /> : <DecreaseIcon />}
+              {hasIncreased ? (
+                <IncreaseIcon />
+              ) : diff === 0 ? (
+                ""
+              ) : (
+                <DecreaseIcon />
+              )}
             </span>
           </div>
         );

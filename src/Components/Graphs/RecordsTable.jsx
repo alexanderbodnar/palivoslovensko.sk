@@ -1,5 +1,4 @@
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Spinner from "../Common/Spinner";
 
@@ -14,20 +13,16 @@ function getFuelWithMaxOrMinValue(fuelArray, type) {
     );
 
     if (validMeasures.length === 0) {
-      // If no valid measures, return empty values to avoid errors
       return { name: fuel.name, value: null, week: null };
     }
 
-    const desiredMeasure = validMeasures.reduce(
-      (acc, current) => {
-        if (type === "max") {
-          return current.value > acc.value ? current : acc;
-        } else {
-          return current.value < acc.value ? current : acc;
-        }
-      },
-      validMeasures[0] // Initial value to prevent empty array errors
-    );
+    const desiredMeasure = validMeasures.reduce((acc, current) => {
+      if (type === "max") {
+        return current.value > acc.value ? current : acc;
+      } else {
+        return current.value < acc.value ? current : acc;
+      }
+    }, validMeasures[0]);
 
     return {
       name: fuel.name,

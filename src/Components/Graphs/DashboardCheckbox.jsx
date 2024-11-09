@@ -9,11 +9,11 @@ const DashboardCheckbox = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [formYear, setFormYear] = useState(year);
 
-  // Initialize selected options based on apiData, not data
   useEffect(() => {
     if (apiData.length > 0) {
-      const initialOptions = apiData.reduce((acc, fuel) => {
-        acc[fuel.name] = true; // Set all fuel types to true initially
+      const initialOptions = apiData.reduce((acc, fuel, index) => {
+        acc[fuel.name] = index < 7 ? true : false;
+        handleSubmit();
         return acc;
       }, {});
       setSelectedOptions(initialOptions);
@@ -32,27 +32,25 @@ const DashboardCheckbox = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
 
-    // Filter only the displayed data, but keep options intact
     const updatedData = apiData.filter((fuel) => selectedOptions[fuel.name]);
 
-    // Update the data (removing unchecked items) and set the year
     setData(updatedData);
     setYear(formYear);
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto flex">
       <form
-        className="w-full max-h-full group cursor-default select-none py-2 pl-3 pr-9 text-gray-900"
-        onSubmit={handleSubmit} // Handle form submission
+        className="min-w-full max-h-full group cursor-default select-none py-2 text-gray-900"
+        onSubmit={handleSubmit}
       >
-        <div className="z-10 mt-1 max-h-56 w-full overflow-auto rounded bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-hidden">
+        <div className="z-10 mt-1 max-h-40 w-full overflow-y-auto rounded bg-white py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           {apiData.map((fuel) => (
             <label
               key={fuel.name}
-              className="flex justify-between hover:bg-neutral-200 ml-3 block truncate font-normal flex-row-reverse items-center space-x-3 "
+              className="flex justify-between hover:bg-neutral-200 ml-3 block truncate font-normal flex-row-reverse items-center space-x-3"
             >
               <input
                 type="checkbox"
@@ -61,11 +59,11 @@ const DashboardCheckbox = () => {
                 onChange={handleCheckboxChange}
                 className="flex h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <span className="flex">{fuel.name}</span>
+              <span className="flex font-lg font-bold">{fuel.name}</span>
             </label>
           ))}
         </div>
-        <div className="flex mt-4">
+        <div className="flex mt-4 mx-4">
           <label className="block text-gray-700 font-bold mb-2">
             {t("common.selectYear")}
           </label>
@@ -80,7 +78,7 @@ const DashboardCheckbox = () => {
         </div>
         <button
           type="submit"
-          className="bg-sky-500 hover:bg-sky-700 rounded px-2 my-2"
+          className="mt-6 bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-sky-300"
         >
           {t("common.show")}
         </button>

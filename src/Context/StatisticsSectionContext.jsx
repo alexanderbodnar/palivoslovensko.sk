@@ -1,33 +1,25 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getDataWithParams } from "../API/monthlyData";
-// Create the context
 const StatisticsSectionContext = createContext();
 
-// Create a custom hook to use the context
 export const useStatisticsSectionContext = () => {
   return useContext(StatisticsSectionContext);
 };
 
 function generateNumberString(start, end) {
-  // Convert start and end to integers
   const startNum = parseInt(start, 10);
   const endNum = parseInt(end, 10);
 
-  // Check if start is greater than end
   if (startNum < endNum) {
     throw new Error("Start number must be greater than end number");
   }
 
-  // Create an array to store numbers
   const numbers = [];
 
-  // Generate numbers from start to end
   for (let i = startNum; i >= endNum; i--) {
     numbers.push(i);
   }
-
-  // Join the array into a comma-separated string
   return numbers.join(",");
 }
 
@@ -80,7 +72,6 @@ export const StatisticsSectionProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [year, setYear] = useState(new Date().getFullYear());
   const [error, setError] = useState(null);
-
   const { t, i18n } = useTranslation();
 
   useEffect(() => {

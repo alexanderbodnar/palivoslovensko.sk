@@ -49,10 +49,10 @@ export default function NavigationBar() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 md:justify-between items-center justify-center sm:items-stretch">
-            <div className="flex flex-shrink-0 items-center">
+            <a className="flex flex-shrink-0 items-center" href="/">
               <img alt="PalivoSlovensko" src={logo} className="h-8 w-auto" />
               <h1 className="font-bold text-lg">Palivoslovensko.sk</h1>
-            </div>
+            </a>
             <div className="hidden sm:ml-6 sm:block justify-end md:justify-end">
               <div className="flex space-x-4">
                 {navigation.map((item) => (

@@ -18,7 +18,7 @@ export default function Statistics() {
       >
         {/* Fuel Selection Section */}
         <div
-          className="border-2 rounded overflow-auto"
+          className="rounded-lg shadow-md overflow-auto"
           aria-labelledby="fuel-selection-heading"
           style={{ maxHeight: "40vh" }}
         >
@@ -35,7 +35,7 @@ export default function Statistics() {
 
         {/* Records div */}
         <div
-          className="border-2 rounded overflow-auto"
+          className="rounded-lg shadow-md overflow-auto"
           aria-labelledby="max-records-heading"
           role="region"
           style={{ maxHeight: "40vh" }}
@@ -52,7 +52,7 @@ export default function Statistics() {
         </div>
 
         <div
-          className="border-2 rounded overflow-auto"
+          className="rounded-lg shadow-md overflow-auto"
           aria-labelledby="min-records-heading"
           role="region"
           style={{ maxHeight: "40vh" }}
@@ -69,7 +69,7 @@ export default function Statistics() {
         </div>
 
         <div
-          className="border-2 rounded col-span-1 md:col-span-3"
+          className="rounded-lg shadow-md col-span-1 md:col-span-3"
           aria-labelledby="comparision-to-last-week"
           role="region"
         >
@@ -86,7 +86,7 @@ export default function Statistics() {
 
         {/* Graph div */}
         <div
-          className="border-2 rounded col-span-1 md:col-span-3 max-w-full"
+          className="rounded-lg shadow-md col-span-1 md:col-span-3 max-w-full"
           aria-labelledby="price-development-graph-heading"
           role="region"
         >
@@ -103,7 +103,7 @@ export default function Statistics() {
 
         {/* Yearly Pricing Table */}
         <div
-          className="border-2 rounded col-span-1 md:col-span-3"
+          className="rounded-lg shadow-md col-span-1 md:col-span-3"
           aria-labelledby="yearly-pricing-table-heading"
           role="region"
           style={{ maxHeight: "55vh" }}
