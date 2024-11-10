@@ -63,8 +63,8 @@ const DashboardCheckbox = () => {
             </label>
           ))}
         </div>
-        <div className="flex mt-4 mx-4">
-          <label className="block text-gray-700 font-bold mb-2">
+        <div className="flex m-4 justify-stretch">
+          <label className="block text-gray-700 font-bold p-2">
             {t("common.selectYear")}
           </label>
           <input
@@ -73,12 +73,12 @@ const DashboardCheckbox = () => {
             max={new Date().getFullYear()}
             value={formYear}
             onChange={handleYearChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           />
         </div>
         <button
           type="submit"
-          className="mt-6 bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-sky-300"
+          className="flex mt-6 mx-auto bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-sky-300"
         >
           {t("common.show")}
         </button>

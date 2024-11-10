@@ -4,7 +4,7 @@
     "show": "Zobraziť",
     "price": "Cena",
     "week": "Týždeň",
-    "selectYear": "Zvoliť rok",
+    "selectYear": "Zobrazený rok",
     "value": "Hodnota"
   },
   "navigation": {
@@ -41,7 +41,7 @@
   },
   "statistics": {
     "yearlyPricingTable": "Cena palív",
-    "priceDevelopmentGraph": "Vývoj palív",
+    "priceDevelopmentGraph": "Vývoj cien palív",
     "checkboxHeader": "Zobraziť palivá",
     "maxRecords": "Najvyššie ceny",
     "minRecords": "Najnižšie ceny",
@@ -49,6 +49,6 @@
   },
   "landingPage": {
     "goToStatistics": "Prejsť na štatistiky",
-    "welcome": "Vítajte"
+    "welcome": "Vitajte"
   }
 }

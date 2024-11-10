@@ -2,6 +2,7 @@ import { useStatisticsSectionContext } from "../../Context/StatisticsSectionCont
 import { useMemo } from "react";
 import IncreaseIcon from "../Icons/IncreaseIcon";
 import DecreaseIcon from "../Icons/DecreaseIcon";
+import StaleIcon from "../Icons/Stale";
 import Spinner from "./Spinner";
 
 function getTwoLatestWeeks(measuresArray) {
@@ -24,21 +25,21 @@ function getTwoLatestWeeks(measuresArray) {
 }
 
 function getColorsBasedOnStatus(latestWeek, previousWeek) {
-  let bgColorClass = "bg-gradient-to-t from-blue-500 via-blue-400 to-blue-500",
+  let bgColorClass = "border-2  border-solid border-blue-700",
     textColorClass = "text-blue-800";
   if (latestWeek.value - previousWeek.value > 0) {
-    bgColorClass = "bg-gradient-to-t from-rose-200 to-rose-300";
+    bgColorClass = "border-2 border-solid border-red-700";
     textColorClass = "text-rose-800";
   }
   if (latestWeek.value - previousWeek.value < 0) {
-    bgColorClass = "bg-gradient-to-t from-green-200 to-green-300";
+    bgColorClass = "border-2 border-solid border-green-700";
     textColorClass = "text-green-800";
   }
   return [bgColorClass, textColorClass];
 }
 
 export default function CurrentWeek() {
-  const { data, loading } = useStatisticsSectionContext();
+  const { data, loading, year } = useStatisticsSectionContext();
   const dateObj = useMemo(() => new Date(), []);
   if (loading) return <Spinner></Spinner>;
 
@@ -46,8 +47,20 @@ export default function CurrentWeek() {
     dateObj.getMonth() + 1
   }.${dateObj.getFullYear()}`;
 
-  return (
-    <div className="flex flex-row overflow-auto">
+  const getIcon = (diff) => {
+    if (diff > 0) return <IncreaseIcon />;
+    if (diff < 0) return <DecreaseIcon />;
+    return <StaleIcon />;
+  };
+  const getSign = (diff) => {
+    if (diff > 0) return "+";
+    if (diff < 0) return "-";
+    return "";
+  };
+  return year !== dateObj.getFullYear() ? (
+    <></>
+  ) : (
+    <div className="flex flex-row overflow-auto snap-x">
       {data?.map((fuel) => {
         const { latestWeek, previousWeek } = getTwoLatestWeeks(
           fuel.measuresArray
@@ -64,12 +77,11 @@ export default function CurrentWeek() {
           latestWeek,
           previousWeek
         );
-        const hasIncreased = diff > 0;
 
         return (
           <div
             key={fuel.name}
-            className={`grid ${bgColorClass} px-2 m-2 rounded max-w-[10%]`}
+            className={`grid ${bgColorClass} px-2 m-2 rounded max-w-[10%] min-w-min snap-center`}
           >
             <date className="text-slate-400 font-bold text-sm">
               {formattedDate}
@@ -81,16 +93,8 @@ export default function CurrentWeek() {
             <span
               className={`inline-block ${textColorClass} whitespace-nowrap`}
             >
-              {`${
-                hasIncreased > 0 ? "+" : "-"
-              }${priceDifference}€ (${percentageChange}%)`}
-              {hasIncreased ? (
-                <IncreaseIcon />
-              ) : diff === 0 ? (
-                ""
-              ) : (
-                <DecreaseIcon />
-              )}
+              {`${getSign(diff)}${priceDifference}€ (${percentageChange}%)`}
+              {getIcon(diff)}
             </span>
           </div>
         );

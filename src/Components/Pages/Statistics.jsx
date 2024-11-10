@@ -20,7 +20,7 @@ export default function Statistics() {
         <div
           className="rounded-lg shadow-md overflow-auto"
           aria-labelledby="fuel-selection-heading"
-          style={{ maxHeight: "40vh" }}
+          style={{ maxHeight: "fit-content" }}
         >
           <header className="text-center bg-neutral-100">
             <h2
@@ -38,7 +38,7 @@ export default function Statistics() {
           className="rounded-lg shadow-md overflow-auto"
           aria-labelledby="max-records-heading"
           role="region"
-          style={{ maxHeight: "40vh" }}
+          style={{ maxHeight: "332px" }}
         >
           <header className="text-center bg-neutral-100">
             <h2
@@ -55,7 +55,7 @@ export default function Statistics() {
           className="rounded-lg shadow-md overflow-auto"
           aria-labelledby="min-records-heading"
           role="region"
-          style={{ maxHeight: "40vh" }}
+          style={{ maxHeight: "332px" }}
         >
           <header className="text-center bg-neutral-100">
             <h2
@@ -106,7 +106,7 @@ export default function Statistics() {
           className="rounded-lg shadow-md col-span-1 md:col-span-3"
           aria-labelledby="yearly-pricing-table-heading"
           role="region"
-          style={{ maxHeight: "55vh" }}
+          style={{ maxHeight: "60vh" }}
         >
           <header className="text-center bg-neutral-100">
             <h2

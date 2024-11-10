@@ -4,7 +4,7 @@
     "show": "Show",
     "price": "Price",
     "week": "Week",
-    "selectYear": "Select Year",
+    "selectYear": "Showed year",
     "value": "Value"
   },
   "navigation": {
@@ -41,7 +41,7 @@
   },
   "statistics": {
     "yearlyPricingTable": "Fuel prices",
-    "priceDevelopmentGraph": "Fuel development",
+    "priceDevelopmentGraph": "Fuel prices development",
     "checkboxHeader": "Show fuels",
     "maxRecords": "Highest Prices",
     "minRecords": "Lowest Prices",

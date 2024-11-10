@@ -71,10 +71,10 @@ export default function YearlyPricingTable() {
 
     return [weekColumn, ...fuelColumns];
   }, [data, t]);
-  console.log("wir sind hier", data);
+
   const tableData = useMemo(() => {
-    if (!data[0]) return [];
-    return data.map((_, weekIndex) => {
+    if (!data[0]?.measuresArray?.map) return [];
+    return data[0]?.measuresArray?.map((_, weekIndex) => {
       const weekName = data?.[0]?.measuresArray[weekIndex]?.week;
       const rowData = { week: weekName };
       data?.forEach((fuel, fuelIndex) => {
@@ -100,7 +100,7 @@ export default function YearlyPricingTable() {
   return (
     <div className="flex flex-col overflow-auto max-h-full">
       <div className="overflow-y-auto">
-        <div className="inline-block min-w-full py-2">
+        <div className="inline-block min-w-full">
           <div className="overflow-hidden">
             <table
               {...getTableProps()}
