@@ -1,8 +1,15 @@
 import React, { useMemo } from "react";
-import { useTable, useFilters, useSortBy, defaultColumn } from "react-table";
+import { useTable, useFilters, useSortBy } from "react-table";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import Spinner from "../Common/Spinner";
 import { t } from "i18next";
+
+// Custom sort function to handle float numbers
+const floatSort = (rowA, rowB, columnId) => {
+  const a = parseFloat(rowA.values[columnId]) || 0;
+  const b = parseFloat(rowB.values[columnId]) || 0;
+  return a > b ? 1 : b > a ? -1 : 0;
+};
 
 const formatWeekCaption = (weekName) => {
   const week = weekName.split("(");
@@ -60,6 +67,7 @@ export default function YearlyPricingTable() {
       accessor: fuel.name,
       disableFilters: true,
       Cell: ({ value }) => (value ? value : "-"),
+      sortType: floatSort, // Apply the float sort function here
     }));
 
     const weekColumn = {
@@ -93,7 +101,9 @@ export default function YearlyPricingTable() {
     useFilters,
     useSortBy
   );
+
   if (loading) return <Spinner />;
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 

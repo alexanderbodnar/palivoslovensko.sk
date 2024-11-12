@@ -83,7 +83,10 @@ export default function CurrentWeek() {
             key={fuel.name}
             className={`grid ${bgColorClass} px-2 m-2 rounded max-w-[10%] min-w-min snap-center`}
           >
-            <date className="text-slate-400 font-bold text-sm">
+            <date
+              className="text-slate-400 font-bold text-sm"
+              key={`date--${fuel.name}`}
+            >
               {formattedDate}
             </date>
             <span className="font-bold text-md">{fuel.name.split("(")[0]}</span>
