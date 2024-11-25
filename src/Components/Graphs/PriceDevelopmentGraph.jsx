@@ -116,6 +116,7 @@ export default function PriceDevelopmentGraph() {
         beginAtZero: true,
       },
     },
+    maintainAspectRatio: false
   };
   return (
     <div className="chart-container max-h-full max-w-full min-h-full min-w-full">
