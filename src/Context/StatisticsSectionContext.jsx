@@ -65,7 +65,6 @@ function calculateWeeks() {
   return resultWeek.toString();
 }
 
-// Create a provider component
 export const StatisticsSectionProvider = ({ children }) => {
   const [apiData, setApiData] = useState([]);
   const [data, setData] = useState([]);
@@ -76,6 +75,18 @@ export const StatisticsSectionProvider = ({ children }) => {
 
   useEffect(() => {
     async function fetchData() {
+      const currentDate = `${new Date().toLocaleDateString()}${i18n.language}`;
+      const savedData = localStorage.getItem(`${year}${i18n.language}`);
+      const savedDate = localStorage.getItem("currentDate");
+
+      if (savedData && JSON.parse(savedDate) === currentDate) {
+        setApiData(JSON.parse(savedData));
+        setData(JSON.parse(savedData));
+        setLoading(false);
+        console.log("data are from local storage");
+        return;
+      }
+
       try {
         const resultWeek = calculateWeeks();
         const response = await getDataWithParams(
@@ -86,11 +97,16 @@ export const StatisticsSectionProvider = ({ children }) => {
 
         if (!response) throw Error("No data found!");
 
-        setApiData(processApiData(response));
-        setData(processApiData(response));
+        const processedData = processApiData(response);
+        setApiData(processedData);
+        setData(processedData);
+        localStorage.setItem(
+          `${year}${i18n.language}`,
+          JSON.stringify(processedData)
+        );
+        localStorage.setItem("currentDate", JSON.stringify(currentDate));
       } catch (err) {
         console.log(err.message);
-
         setError(err);
       } finally {
         setLoading(false);

@@ -6,9 +6,11 @@ export default function StaleIcon({ size = 6 }) {
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="size-6"
+      className={`size-${size} text-blue-800`}
     >
-      <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+      <path    
+        stroke-linecap="round"
+        stroke-linejoin="round" d="M5 12h14" />
     </svg>
   );
 }

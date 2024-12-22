@@ -57,7 +57,8 @@ export default function CurrentWeek() {
     if (diff < 0) return "-";
     return "";
   };
-  return year !== dateObj.getFullYear() ? (
+
+  return JSON.parse(year) !== dateObj.getFullYear() ? (
     <></>
   ) : (
     <div className="flex flex-row overflow-auto snap-x">

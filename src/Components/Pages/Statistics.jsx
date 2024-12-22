@@ -1,4 +1,3 @@
-import { StatisticsSectionProvider } from "../../Context/StatisticsSectionContext";
 import { useTranslation } from "react-i18next";
 import DashboardCheckbox from "../Graphs/DashboardCheckbox";
 import PriceDevelopmentGraph from "../Graphs/PriceDevelopmentGraph";
@@ -9,9 +8,8 @@ import CurrentWeek from "../Common/CurrentWeek";
 export default function Statistics() {
   const { t } = useTranslation();
   const headerStyle = "font-bold text-lg tracking-wide";
-
   return (
-    <StatisticsSectionProvider>
+      <>
       <main
         className="m-2 gap-4 grid grid-cols-1 md:grid-cols-3 auto-rows-min" // Responsive grid for mobile
         style={{ gridTemplateRows: "auto auto auto" }}
@@ -86,7 +84,7 @@ export default function Statistics() {
 
         {/* Graph div */}
         <div
-          className="rounded-lg shadow-md col-span-1 md:col-span-3 max-w-full"
+          className="rounded-lg shadow-md col-span-1 md:col-span-3 max-w-full max-h-[60vh] md:max-h-auto"
           aria-labelledby="price-development-graph-heading"
           role="region"
         >
@@ -132,6 +130,6 @@ export default function Statistics() {
           </a>
         </p>
       </footer>
-    </StatisticsSectionProvider>
+      </>
   );
 }

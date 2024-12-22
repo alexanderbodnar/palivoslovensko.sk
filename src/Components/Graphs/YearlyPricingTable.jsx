@@ -3,8 +3,8 @@ import { useTable, useFilters, useSortBy } from "react-table";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import Spinner from "../Common/Spinner";
 import { t } from "i18next";
+import i18n from "../../i18n";
 
-// Custom sort function to handle float numbers
 const floatSort = (rowA, rowB, columnId) => {
   const a = parseFloat(rowA.values[columnId]) || 0;
   const b = parseFloat(rowB.values[columnId]) || 0;
@@ -78,7 +78,7 @@ export default function YearlyPricingTable() {
     };
 
     return [weekColumn, ...fuelColumns];
-  }, [data, t]);
+  }, [data, i18n.language]);
 
   const tableData = useMemo(() => {
     if (!data[0]?.measuresArray?.map) return [];
