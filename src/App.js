@@ -9,12 +9,14 @@ import ContactUs from "./Components/Pages/ContactUs";
 import RouteNotFound from "./Components/Common/RouteNotFound";
 import SupportUs from "./Components/Pages/SupportUs";
 import LandingPage from "./Components/Pages/LandingPage";
+import { StatisticsSectionProvider } from "./Context/StatisticsSectionContext";
 
 function App() {
   return (
     <div className="App">
+      <StatisticsSectionProvider>
       <NavigationBar />
-
+ 
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="" element={<MainSection />}>
@@ -27,7 +29,9 @@ function App() {
       </Routes>
 
       <FooterSection />
+      </StatisticsSectionProvider>
     </div>
+
   );
 }
 

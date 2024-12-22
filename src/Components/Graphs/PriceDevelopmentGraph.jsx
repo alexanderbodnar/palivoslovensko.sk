@@ -13,6 +13,7 @@ import {
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import { useTranslation } from "react-i18next";
 import Spinner from "../Common/Spinner";
+import { useState,useEffect } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -21,7 +22,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+
 );
 
 const colors = [
@@ -74,21 +76,37 @@ const colors = [
 export default function PriceDevelopmentGraph() {
   const { data, loading } = useStatisticsSectionContext();
   const { t } = useTranslation();
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const processDate = (date) => {
+    return isSmallScreen ? date.split('(').at(0) : date;
+  }; 
+  
   if (loading) return <Spinner />;
 
+
   const graphData = {
-    labels: data[0]?.measuresArray?.map((el) => el.week),
+    labels: data[0]?.measuresArray?.map((el) => processDate(el.week)),
     datasets: data?.map((fuel, index) => ({
       label: fuel.name,
       data: fuel.measuresArray?.map((el) => el.value),
       borderColor: colors[index].borderColor,
       backgroundColor: colors[index].backgroundColor,
-      fill: true,
+
     })),
   };
 
   const options = {
-    responsive: true,
+    maintainAspectRatio : false,
     plugins: {
       legend: {
         position: "top",
@@ -117,6 +135,7 @@ export default function PriceDevelopmentGraph() {
       },
     }
   };
+
   return (
     <div className="chart-container max-h-full max-w-full min-h-full min-w-full">
       <Line data={graphData} options={options} />
