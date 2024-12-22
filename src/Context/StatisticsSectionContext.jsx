@@ -98,7 +98,7 @@ export const StatisticsSectionProvider = ({ children }) => {
     }
 
     fetchData();
-  }, [t, year]);
+  }, [i18n.language, year]);
 
   return (
     <StatisticsSectionContext.Provider
