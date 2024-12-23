@@ -44,7 +44,7 @@ const DashboardCheckbox = () => {
 
   const handleYearSubmit = (e) => {
     e.preventDefault();
-    setYear(year);
+    setYear(formYear);
   };
   return (
     <div className="container mx-auto flex">
