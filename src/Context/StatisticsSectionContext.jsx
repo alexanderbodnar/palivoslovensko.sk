@@ -70,8 +70,8 @@ export const StatisticsSectionProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [error, setError] = useState(null);
-  const { t, i18n } = useTranslation();
+  const [setError] = useState(null);
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     async function fetchData() {

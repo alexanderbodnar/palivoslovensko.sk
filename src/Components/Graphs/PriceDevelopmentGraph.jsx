@@ -13,7 +13,7 @@ import {
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import { useTranslation } from "react-i18next";
 import Spinner from "../Common/Spinner";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -22,8 +22,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend,
-
+  Legend
 );
 
 const colors = [
@@ -88,11 +87,10 @@ export default function PriceDevelopmentGraph() {
   }, []);
 
   const processDate = (date) => {
-    return isSmallScreen ? date.split('(').at(0) : date;
-  }; 
-  
-  if (loading) return <Spinner />;
+    return isSmallScreen ? date.split("(").at(0) : date;
+  };
 
+  if (loading) return <Spinner />;
 
   const graphData = {
     labels: data[0]?.measuresArray?.map((el) => processDate(el.week)),
@@ -101,12 +99,11 @@ export default function PriceDevelopmentGraph() {
       data: fuel.measuresArray?.map((el) => el.value),
       borderColor: colors[index].borderColor,
       backgroundColor: colors[index].backgroundColor,
-
     })),
   };
 
   const options = {
-    maintainAspectRatio : false,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top",
@@ -114,7 +111,7 @@ export default function PriceDevelopmentGraph() {
       tooltip: {
         callbacks: {
           label: (tooltipItem) => {
-            return `Value: ${tooltipItem.raw}`;
+            return `${t("common.price")}: ${tooltipItem.raw}€`;
           },
         },
       },
@@ -129,11 +126,11 @@ export default function PriceDevelopmentGraph() {
       y: {
         title: {
           display: true,
-          text: t("common.value"),
+          text: t("common.price"),
         },
         beginAtZero: true,
       },
-    }
+    },
   };
 
   return (
