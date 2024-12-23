@@ -1,5 +1,5 @@
 import ListGenerator from "../Common/ListGenerator";
-import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
+
 
 const content = [
   {
@@ -16,7 +16,6 @@ const content = [
   },
 ];
 export default function AboutProject() {
-  const { data } = useStatisticsSectionContext();
   return (
     <>
       <div className="border-b-2 w-full text-center py-2 ">
