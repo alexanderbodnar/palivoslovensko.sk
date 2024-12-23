@@ -3,7 +3,6 @@ import { useTable, useFilters, useSortBy } from "react-table";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import Spinner from "../Common/Spinner";
 import { t } from "i18next";
-import i18n from "../../i18n";
 
 const floatSort = (rowA, rowB, columnId) => {
   const a = parseFloat(rowA.values[columnId]) || 0;
@@ -78,7 +77,7 @@ export default function YearlyPricingTable() {
     };
 
     return [weekColumn, ...fuelColumns];
-  }, [data, i18n.language]);
+  }, [data]);
 
   const tableData = useMemo(() => {
     if (!data[0]?.measuresArray?.map) return [];
@@ -155,7 +154,11 @@ export default function YearlyPricingTable() {
                           {...cell.getCellProps()}
                           className="px-4 py-2 border"
                         >
-                          {cell.render("Cell")}
+                          {cell.render("Cell", {
+                            value: cell.value !== 'X'
+                              ? `${cell.value}€`
+                              : "",
+                          })}
                         </td>
                       ))}
                     </tr>

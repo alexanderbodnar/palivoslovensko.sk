@@ -58,7 +58,7 @@ export default function RecordsTable({ type }) {
             >
               <td className="px-4 py-2">{fuel.name}</td>
               <td className="px-4 py-2">
-                {fuel.value !== null ? fuel.value : "N/A"}
+                {fuel.value !== null ? fuel.value : "N/A"}€
               </td>
               <td className="px-4 py-2">
                 {fuel.week !== null ? fuel.week : "N/A"}

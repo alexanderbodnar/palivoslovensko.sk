@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Spinner() {
   return (
-    <div className="flex justify-center items-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+    <div className="relative flex animate-pulse gap-2 p-4r min-h-[33vh] min-w-[20vw]">
+      <div class="flex-1 p-2 min-h-full rounded-lg bg-slate-200 text-lg m-2"></div>
     </div>
   );
 }

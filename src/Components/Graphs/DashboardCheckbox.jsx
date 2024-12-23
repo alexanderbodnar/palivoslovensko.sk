@@ -6,6 +6,7 @@ import { t } from "i18next";
 const DashboardCheckbox = () => {
   const { apiData, loading, year, setYear, setData } =
     useStatisticsSectionContext();
+  console.log("RERENDER");
   const [selectedOptions, setSelectedOptions] = useState({});
   const [formYear, setFormYear] = useState(year);
 
@@ -44,7 +45,7 @@ const DashboardCheckbox = () => {
 
   const handleYearSubmit = (e) => {
     e.preventDefault();
-    setYear(formYear);
+    setYear(e.target.value);
   };
   return (
     <div className="container mx-auto flex">
@@ -83,6 +84,7 @@ const DashboardCheckbox = () => {
           />
           <button
             className="rounded-r-lg bg-[#297A49] text-white px-2 font-bold"
+            label="Submit a year to display"
             onClick={handleYearSubmit}
           >
             {t("common.show")}
