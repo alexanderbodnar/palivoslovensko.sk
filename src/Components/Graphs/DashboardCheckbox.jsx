@@ -10,9 +10,9 @@ const DashboardCheckbox = () => {
   const [formYear, setFormYear] = useState(year);
 
   useEffect(() => {
-    if (apiData.length > 0) {
+    if (apiData.length > 0 && Object.keys(selectedOptions).length === 0) {
       const initialOptions = apiData.reduce((acc, fuel, index) => {
-        acc[fuel.name] = index < 7; // Default: true for the first 7 items
+        acc[fuel.name] = index < 7;
         return acc;
       }, {});
       setSelectedOptions(initialOptions);
@@ -20,23 +20,9 @@ const DashboardCheckbox = () => {
   }, [apiData]);
 
   useEffect(() => {
-    if (Object.keys(selectedOptions).length > 0) {
-      const updatedData = apiData.filter((fuel) => selectedOptions[fuel.name]);
-      if (updatedData.length > 0) {
-        setData(updatedData);
-      }
-      if (formYear !== year) {
-        setYear(formYear);
-      }
-    }
-  }, [selectedOptions]);
-
-  if (loading) return <Spinner />;
-
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setSelectedOptions((prev) => ({ ...prev, [name]: checked }));
-  };
+    const updatedData = apiData.filter((fuel) => selectedOptions[fuel.name]);
+    setData(updatedData);
+  }, [selectedOptions, apiData, setData]);
 
   const handleYearChange = (e) => {
     setFormYear(e.target.value);
@@ -44,8 +30,18 @@ const DashboardCheckbox = () => {
 
   const handleYearSubmit = (e) => {
     e.preventDefault();
-    setYear(formYear);
+    if (formYear !== year) {
+      setYear(formYear);
+    }
   };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setSelectedOptions((prev) => ({ ...prev, [name]: checked }));
+  };
+
+  if (loading) return <Spinner />;
+
   return (
     <div className="container mx-auto flex">
       <form className="min-w-full max-h-full group cursor-default select-none py-2 text-gray-900">

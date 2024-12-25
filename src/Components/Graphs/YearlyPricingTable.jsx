@@ -85,7 +85,8 @@ export default function YearlyPricingTable() {
       const weekName = data?.[0]?.measuresArray[weekIndex]?.week;
       const rowData = { week: weekName };
       data?.forEach((fuel, fuelIndex) => {
-        rowData[fuel.name] = processedData?.[weekIndex]?.[fuelIndex] || "-";
+        rowData[fuel.name] =
+          processedData?.[weekIndex]?.[fuelIndex] + "€" || "-";
       });
       return rowData;
     });
@@ -155,9 +156,7 @@ export default function YearlyPricingTable() {
                           className="px-4 py-2 border"
                         >
                           {cell.render("Cell", {
-                            value: cell.value !== 'X'
-                              ? `${cell.value}€`
-                              : "",
+                            value: cell.value !== "X€" ? cell.value : "",
                           })}
                         </td>
                       ))}
