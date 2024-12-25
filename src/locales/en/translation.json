@@ -50,5 +50,10 @@
   "landingPage": {
     "goToStatistics": "Go to the statistics",
     "welcome": "Welcome"
+  },
+  "aboutProject": {
+    "goalsHeader": "Goals",
+    "goalsDescription": "The goal of the project is to simplify access to information about fuel prices provided by the statistical office. It offers a clear and up-to-date view of the development of fuel prices in Slovakia. We focus on visualizing data on gasoline, diesel, and other fuel prices in one-week intervals, allowing everyone to easily track price changes. For these purposes, we use tools such as graphs and tables. The project is the work of two students from TUKE who wanted to make use of their free time by advancing their technical skills.",
+    "technologiesHeader": "Technologies Used"
   }
 }
