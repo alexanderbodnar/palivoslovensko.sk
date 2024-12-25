@@ -16,7 +16,7 @@ export default function AboutProject() {
   ];
   const Icons = () => {
     return (
-      <div className="flex space-x-8 text-9xl ">
+      <div className="flex flex-wrap md:space-x-8 text-9xl ">
         {/* React */}
         <a
           href="https://reactjs.org/"
@@ -91,11 +91,11 @@ export default function AboutProject() {
   };
 
   return (
-    <>
-      <div className="border-b-2 w-full text-center py-2 ">
+    <div className="max-w-full">
+      <div className="border-b-2 w-full text-center py-2 max-w-full">
         <h1 className="text-4xl">Viac o projekte Palivoslovensko</h1>
       </div>
       <ListGenerator content={content} CustomComponent={Icons} />
-    </>
+    </div>
   );
 }

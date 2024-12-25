@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import Spinner from "../Common/Spinner";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import { t } from "i18next";
+import DateRangeFilter from "./DateRangeFilter";
 
 const DashboardCheckbox = () => {
-  const { apiData, loading, year, setYear, setData } =
+  const { apiData, loading, year, setYear, setData, data } =
     useStatisticsSectionContext();
   const [selectedOptions, setSelectedOptions] = useState({});
   const [formYear, setFormYear] = useState(year);
@@ -22,7 +23,7 @@ const DashboardCheckbox = () => {
   useEffect(() => {
     const updatedData = apiData.filter((fuel) => selectedOptions[fuel.name]);
     setData(updatedData);
-  }, [selectedOptions, apiData, setData]);
+  }, [selectedOptions, apiData]);
 
   const handleYearChange = (e) => {
     setFormYear(e.target.value);
@@ -84,6 +85,9 @@ const DashboardCheckbox = () => {
           >
             {t("common.show")}
           </button>
+        </div>
+        <div className="flex m-4 justify-stretch">
+          <DateRangeFilter selectedOptions={selectedOptions} />
         </div>
       </form>
     </div>

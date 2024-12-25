@@ -4,6 +4,7 @@ import PriceDevelopmentGraph from "../Graphs/PriceDevelopmentGraph";
 import YearlyPricingTable from "../Graphs/YearlyPricingTable";
 import RecordsTable from "../Graphs/RecordsTable";
 import CurrentWeek from "../Common/CurrentWeek";
+import BarGraph from "../Graphs/BarGraph";
 
 export default function Statistics() {
   const { t } = useTranslation();
@@ -97,6 +98,21 @@ export default function Statistics() {
             </h2>
           </header>
           <PriceDevelopmentGraph />
+        </div>
+        <div
+          className="rounded-lg shadow-md col-span-1 md:col-span-3 max-w-full max-h-[60vh] md:max-h-auto"
+          aria-labelledby="price-development-graph-heading"
+          role="region"
+        >
+          <header className="text-center bg-neutral-100">
+            <h2
+              className={`${headerStyle} text-base md:text-lg`}
+              id="price-development-graph-heading"
+            >
+              {t("statistics.priceDevelopmentGraph")}
+            </h2>
+          </header>
+          <BarGraph />
         </div>
 
         {/* Yearly Pricing Table */}

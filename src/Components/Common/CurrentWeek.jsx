@@ -42,10 +42,13 @@ export default function CurrentWeek() {
   const { data, loading, year } = useStatisticsSectionContext();
   const dateObj = useMemo(() => new Date(), []);
   if (loading) return <Spinner></Spinner>;
-
-  const formattedDate = `${dateObj.getDate()}.${
-    dateObj.getMonth() + 1
-  }.${dateObj.getFullYear()}`;
+  const formattedDate = `${data[0]?.measuresArray[
+    data[0]?.measuresArray?.length - 1
+  ]?.week
+    .split("(")
+    .at(1)
+    .slice(0, -1)
+    .replaceAll(" ", "")}`;
 
   const getIcon = (diff) => {
     if (diff > 0) return <IncreaseIcon />;
@@ -54,7 +57,7 @@ export default function CurrentWeek() {
   };
   const getSign = (diff) => {
     if (diff > 0) return "+";
-    if (diff < 0) return "-";
+    //if (diff < 0) return "-";
     return "";
   };
 
@@ -84,12 +87,12 @@ export default function CurrentWeek() {
             key={fuel.name}
             className={`grid ${bgColorClass} px-2 m-2 rounded max-w-[10%] min-w-min snap-center`}
           >
-            <date
+            <div
               className="text-black font-bold text-sm"
               key={`date--${fuel.name}`}
             >
               {formattedDate}
-            </date>
+            </div>
             <span className="font-bold text-md">{fuel.name.split("(")[0]}</span>
 
             <span className="font-bold text-xl">{latestWeek.value}€</span>

@@ -23,6 +23,14 @@ function generateNumberString(start, end) {
   return numbers.join(",");
 }
 
+function getCurrentWeekNumber() {
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 1);
+  const daysDifference = Math.floor(
+    (now - startOfYear) / (1000 * 60 * 60 * 24)
+  );
+  return Math.ceil((daysDifference + startOfYear.getDay() + 1) / 7);
+}
 function processApiData(response) {
   const fuelObjectsArray = [];
   const fuelsArray = Object.values(
@@ -71,6 +79,10 @@ export const StatisticsSectionProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [year, setYear] = useState(new Date().getFullYear());
   const [setError] = useState(null);
+  const [weekInterval, setWeekInterval] = useState({
+    start: 1,
+    end: getCurrentWeekNumber(),
+  });
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -118,7 +130,16 @@ export const StatisticsSectionProvider = ({ children }) => {
 
   return (
     <StatisticsSectionContext.Provider
-      value={{ apiData, data, setData, loading, year, setYear }}
+      value={{
+        apiData,
+        data,
+        setData,
+        loading,
+        year,
+        setYear,
+        weekInterval,
+        setWeekInterval,
+      }}
     >
       {children}
     </StatisticsSectionContext.Provider>
