@@ -10,7 +10,13 @@ export default function Statistics() {
   const { t } = useTranslation();
   const headerStyle = "font-bold text-lg tracking-wide";
   return (
-      <>
+    <>
+      <title>Vitajte na PalivoSlovensko.sk | Údaje o benzíne a nafte</title>
+      <meta
+        name="description"
+        content="Vaša komplexná platforma pre ceny palív a štatistiky na Slovensku. Preskúmajte trendy, prehľady a historické údaje o benzíne a nafte."
+      />
+
       <main
         className="m-2 gap-4 grid grid-cols-1 md:grid-cols-3 auto-rows-min" // Responsive grid for mobile
         style={{ gridTemplateRows: "auto auto auto" }}
@@ -146,6 +152,6 @@ export default function Statistics() {
           </a>
         </p>
       </footer>
-      </>
+    </>
   );
 }

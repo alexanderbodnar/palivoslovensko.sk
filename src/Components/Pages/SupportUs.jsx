@@ -10,6 +10,14 @@ const content = [
 export default function SupportUs() {
   return (
     <>
+      <title>
+        Podporte nás | Pomôžte zlepšiť údaje o palivách na Slovensku
+      </title>
+      <meta
+        name="description"
+        content="Prispievajte na Štatistiky palív na Slovensku a pomôžte nám zlepšiť pokrytie údajov. Vaša podpora umožňuje presné prehľady."
+      />
+
       <div className="border-b-2 w-full text-center py-2">
         <h1 className="text-4xl">Podpor nás</h1>
       </div>

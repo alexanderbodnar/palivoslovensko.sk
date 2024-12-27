@@ -17,6 +17,12 @@ export default function AboutProject() {
   const Icons = () => {
     return (
       <div className="flex flex-wrap md:space-x-8 text-9xl ">
+        <title>O projekte | Štatistiky palív na Slovensku</title>
+        <meta
+          name="description"
+          content="Zistite viac o projekte Štatistiky palív na Slovensku, našej misii poskytovať presné údaje a tíme, ktorý stojí za prehľadmi."
+        />
+
         {/* React */}
         <a
           href="https://reactjs.org/"
@@ -26,11 +32,9 @@ export default function AboutProject() {
           className="flex flex-col items-center hover:scale-110"
         >
           <FaReact className="text-blue-500  transition-transform" />
-          <h1 className="text-4xl mt-2  transition-transform">
-            React
-          </h1>
+          <h1 className="text-4xl mt-2  transition-transform">React</h1>
         </a>
-  
+
         {/* Tailwind */}
         <a
           href="https://tailwindcss.com/"
@@ -40,11 +44,9 @@ export default function AboutProject() {
           className="flex flex-col items-center hover:scale-110"
         >
           <SiTailwindcss className="text-teal-500  transition-transform" />
-          <h1 className="text-4xl mt-2  transition-transform">
-            Tailwind
-          </h1>
+          <h1 className="text-4xl mt-2  transition-transform">Tailwind</h1>
         </a>
-  
+
         {/* Firebase */}
         <a
           href="https://firebase.google.com/"
@@ -54,11 +56,9 @@ export default function AboutProject() {
           className="flex flex-col items-center hover:scale-110"
         >
           <SiFirebase className="text-yellow-500  transition-transform" />
-          <h1 className="text-4xl mt-2  transition-transform">
-            Firebase
-          </h1>
+          <h1 className="text-4xl mt-2  transition-transform">Firebase</h1>
         </a>
-  
+
         {/* GitHub */}
         <a
           href="https://github.com/"
@@ -68,11 +68,9 @@ export default function AboutProject() {
           className="flex flex-col items-center hover:scale-110"
         >
           <FaGithub className="text-black  transition-transform" />
-          <h1 className="text-4xl mt-2  transition-transform">
-            GitHub
-          </h1>
+          <h1 className="text-4xl mt-2  transition-transform">GitHub</h1>
         </a>
-  
+
         {/* Python */}
         <a
           href="https://www.python.org/"
@@ -82,9 +80,7 @@ export default function AboutProject() {
           className="flex flex-col items-center hover:scale-110"
         >
           <FaPython className="text-black  transition-transform" />
-          <h1 className="text-4xl mt-2  transition-transform">
-            Python
-          </h1>
+          <h1 className="text-4xl mt-2  transition-transform">Python</h1>
         </a>
       </div>
     );
