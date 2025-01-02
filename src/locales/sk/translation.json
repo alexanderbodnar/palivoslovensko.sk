@@ -4,8 +4,9 @@
     "show": "Zobraziť",
     "price": "Cena",
     "week": "Týždeň",
-    "selectYear": "Zobrazený rok",
-    "value": "Hodnota"
+    "selectYear": "Rok",
+    "value": "Hodnota",
+    "notFound": "Nepodarilo sa nám nájsť dáta pre dané parametre."
   },
   "navigation": {
     "statistics": "Štatistiky",
@@ -50,5 +51,14 @@
   "landingPage": {
     "goToStatistics": "Prejsť na štatistiky",
     "welcome": "Vitajte"
+  },
+  "aboutProject": {
+    "goalsHeader": "Ciele",
+    "goalsDescription": "Cieľom projektu je zjednodušiť prístup k informáciam o cene palív ktoré poskytuje štatistický úrad. ktorá poskytuje prehľadný a aktuálny pohľad na vývoj cien pohonných hmôt na Slovensku. Zameriavame sa na vizualizáciu údajov o cenách benzínu, nafty a iných palív v intervale jedného týždňa, aby každý mohol jednoducho sledovať, ako sa menia ceny. Pre tieto účely používame napríklad grafy a tabuľky. Za projektom stoja dvaja študenti TUKE, ktorí chceli využiť voľný čas posúvaním svojich technických shopností dopredu.",
+    "technologiesHeader": "Použité technológie"
+  },
+  "filterData": {
+    "from": "Od",
+    "until": "až"
   }
 }

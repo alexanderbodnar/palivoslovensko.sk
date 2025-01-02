@@ -19,7 +19,6 @@ export default function NavigationBar() {
   const navigation = [
     { name: t("navigation.statistics"), href: "statistiky" },
     { name: t("navigation.aboutProject"), href: "oprojekte" },
-    { name: t("navigation.contact"), href: "kontakt" },
     { name: t("navigation.supportUs"), href: "podportenas" },
   ];
   function getFlagEmoji(countryCode) {

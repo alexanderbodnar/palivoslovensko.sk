@@ -5,6 +5,7 @@ export const getDataWithParams = async (
   fuel = "all",
   lang = "sk"
 ) => {
+  console.log(`${apiURL}${week}/${fuel}?lang=${lang}&type=json`);
   const response = await fetch(
     `${apiURL}${week}/${fuel}?lang=${lang}&type=json`
   );

@@ -3,7 +3,6 @@ import { useTable, useFilters, useSortBy } from "react-table";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import Spinner from "../Common/Spinner";
 import { t } from "i18next";
-import i18n from "../../i18n";
 
 const floatSort = (rowA, rowB, columnId) => {
   const a = parseFloat(rowA.values[columnId]) || 0;
@@ -27,6 +26,7 @@ function DefaultColumnFilter({ column: { filterValue, setFilter } }) {
   return (
     <input
       value={filterValue || ""}
+      onClick={() => {}}
       onChange={(e) => setFilter(e.target.value || undefined)}
       placeholder={``}
       className="w-full border rounded"
@@ -78,7 +78,7 @@ export default function YearlyPricingTable() {
     };
 
     return [weekColumn, ...fuelColumns];
-  }, [data, i18n.language]);
+  }, [data]);
 
   const tableData = useMemo(() => {
     if (!data[0]?.measuresArray?.map) return [];
@@ -86,7 +86,8 @@ export default function YearlyPricingTable() {
       const weekName = data?.[0]?.measuresArray[weekIndex]?.week;
       const rowData = { week: weekName };
       data?.forEach((fuel, fuelIndex) => {
-        rowData[fuel.name] = processedData?.[weekIndex]?.[fuelIndex] || "-";
+        rowData[fuel.name] =
+          processedData?.[weekIndex]?.[fuelIndex] + "€" || "-";
       });
       return rowData;
     });
@@ -117,16 +118,19 @@ export default function YearlyPricingTable() {
               className="min-w-full table-fixed border-collapse"
             >
               <thead className="bg-gray-200 text-gray-700">
-                {headerGroups.map((headerGroup) => (
+                {headerGroups.map((headerGroup, rowIndex) => (
                   <tr
-                    {...headerGroup.getHeaderGroupProps()}
+                    key={`h${rowIndex}`}
+                    depth={headerGroup.depth}
                     className="sticky top-0"
+                    {...getTableProps()}
                   >
-                    {headerGroup.headers.map((column) => (
+                    {headerGroup.headers.map((column, colIndex) => (
                       <th
+                        key={`${rowIndex}-${colIndex}`}
                         {...column.getHeaderProps(
                           column.getSortByToggleProps()
-                        )}
+                        ) }
                         className="px-6 py-3 sticky top-0 bg-gray-200 z-10 border-b"
                       >
                         {column.render("Header")}
@@ -146,16 +150,23 @@ export default function YearlyPricingTable() {
                 ))}
               </thead>
               <tbody {...getTableBodyProps()}>
-                {rows.map((row) => {
+                {rows.map((row, indexRow) => {
                   prepareRow(row);
                   return (
-                    <tr {...row.getRowProps()} className="even:bg-gray-100">
-                      {row.cells.map((cell) => (
+                    <tr
+                      key={`r${indexRow}`}
+                      className="even:bg-gray-100"
+                      onClick={row.onClick}
+                    >
+                      {row.cells.map((cell, indexCol) => (
                         <td
                           {...cell.getCellProps()}
                           className="px-4 py-2 border"
+                          key={`${indexCol}${indexRow}`}
                         >
-                          {cell.render("Cell")}
+                          {cell.render("Cell", {
+                            value: cell.value !== "X€" ? cell.value : "",
+                          })}
                         </td>
                       ))}
                     </tr>

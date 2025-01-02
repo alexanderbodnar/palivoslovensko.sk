@@ -1,10 +1,9 @@
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -18,8 +17,7 @@ import { useState, useEffect, useMemo } from "react";
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -72,7 +70,7 @@ const colors = [
   }, // Spring Green
 ];
 
-export default function PriceDevelopmentGraph() {
+export default function BarGraph() {
   const { data, loading } = useStatisticsSectionContext();
   const { t } = useTranslation();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
@@ -96,8 +94,9 @@ export default function PriceDevelopmentGraph() {
       datasets: data?.map((fuel, index) => ({
         label: fuel.name,
         data: fuel.measuresArray?.map((el) => el.value),
-        borderColor: colors[index].borderColor,
         backgroundColor: colors[index].backgroundColor,
+        borderColor: colors[index].borderColor,
+        borderWidth: 1,
       })),
     };
   }, [data]);
@@ -137,7 +136,7 @@ export default function PriceDevelopmentGraph() {
 
   return (
     <div className="chart-container max-h-full max-w-full min-h-full min-w-full">
-      <Line data={graphData} options={options} />
+      <Bar data={graphData} options={options} />
     </div>
   );
 }

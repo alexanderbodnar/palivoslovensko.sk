@@ -56,11 +56,11 @@ export default function RecordsTable({ type }) {
                 index % 2 === 0 ? "bg-gray-50" : "bg-white"
               }`}
             >
-              <td className="px-4 py-2">{fuel.name}</td>
-              <td className="px-4 py-2">
-                {fuel.value !== null ? fuel.value : "N/A"}
+              <td className="px-4 py-2" key={`name-${index}`}>{fuel.name}</td>
+              <td className="px-4 py-2" key={`value-${index}`}>
+                {fuel.value !== null ? fuel.value : "N/A"}€
               </td>
-              <td className="px-4 py-2">
+              <td className="px-4 py-2" key={`week-${index}`}>
                 {fuel.week !== null ? fuel.week : "N/A"}
               </td>
             </tr>

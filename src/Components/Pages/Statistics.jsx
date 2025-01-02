@@ -4,17 +4,28 @@ import PriceDevelopmentGraph from "../Graphs/PriceDevelopmentGraph";
 import YearlyPricingTable from "../Graphs/YearlyPricingTable";
 import RecordsTable from "../Graphs/RecordsTable";
 import CurrentWeek from "../Common/CurrentWeek";
+import BarGraph from "../Graphs/BarGraph";
+import Error from "../Common/Error";
+
+import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 
 export default function Statistics() {
   const { t } = useTranslation();
+  const { error } = useStatisticsSectionContext();
   const headerStyle = "font-bold text-lg tracking-wide";
+
   return (
-      <>
+    <>
+      <title>Vitajte na PalivoSlovensko.sk | Údaje o benzíne a nafte</title>
+      <meta
+        name="description"
+        content="Vaša komplexná platforma pre ceny palív a štatistiky na Slovensku. Preskúmajte trendy, prehľady a historické údaje o benzíne a nafte."
+      />
+
       <main
         className="m-2 gap-4 grid grid-cols-1 md:grid-cols-3 auto-rows-min" // Responsive grid for mobile
         style={{ gridTemplateRows: "auto auto auto" }}
       >
-        {/* Fuel Selection Section */}
         <div
           className="rounded-lg shadow-md overflow-auto"
           aria-labelledby="fuel-selection-heading"
@@ -31,91 +42,111 @@ export default function Statistics() {
           <DashboardCheckbox />
         </div>
 
-        {/* Records div */}
-        <div
-          className="rounded-lg shadow-md overflow-auto"
-          aria-labelledby="max-records-heading"
-          role="region"
-          style={{ maxHeight: "332px" }}
-        >
-          <header className="text-center bg-neutral-100">
-            <h2
-              className={`${headerStyle} text-base md:text-lg`}
-              id="max-records-heading"
+        {error ? (
+          <Error messageKey={t("common.notFound")} />
+        ) : (
+          <>
+            <div
+              className="rounded-lg shadow-md overflow-auto"
+              aria-labelledby="max-records-heading"
+              role="region"
+              style={{ maxHeight: "332px" }}
             >
-              {t("statistics.maxRecords")}
-            </h2>
-          </header>
-          <RecordsTable type="max" />
-        </div>
+              <header className="text-center bg-neutral-100">
+                <h2
+                  className={`${headerStyle} text-base md:text-lg`}
+                  id="max-records-heading"
+                >
+                  {t("statistics.maxRecords")}
+                </h2>
+              </header>
+              <RecordsTable type="max" />
+            </div>
 
-        <div
-          className="rounded-lg shadow-md overflow-auto"
-          aria-labelledby="min-records-heading"
-          role="region"
-          style={{ maxHeight: "332px" }}
-        >
-          <header className="text-center bg-neutral-100">
-            <h2
-              className={`${headerStyle} text-base md:text-lg`}
-              id="min-records-heading"
+            <div
+              className="rounded-lg shadow-md overflow-auto"
+              aria-labelledby="min-records-heading"
+              role="region"
+              style={{ maxHeight: "332px" }}
             >
-              {t("statistics.minRecords")}
-            </h2>
-          </header>
-          <RecordsTable type="min" />
-        </div>
+              <header className="text-center bg-neutral-100">
+                <h2
+                  className={`${headerStyle} text-base md:text-lg`}
+                  id="min-records-heading"
+                >
+                  {t("statistics.minRecords")}
+                </h2>
+              </header>
+              <RecordsTable type="min" />
+            </div>
 
-        <div
-          className="rounded-lg shadow-md col-span-1 md:col-span-3"
-          aria-labelledby="comparision-to-last-week"
-          role="region"
-        >
-          <header className="text-center bg-neutral-100">
-            <h2
-              className={`${headerStyle} text-base md:text-lg`}
-              id="comparision-to-last-week"
+            <div
+              className="rounded-lg shadow-md col-span-1 md:col-span-3"
+              aria-labelledby="comparision-to-last-week"
+              role="region"
             >
-              {t("statistics.comparision")}
-            </h2>
-          </header>
-          <CurrentWeek />
-        </div>
+              <header className="text-center bg-neutral-100">
+                <h2
+                  className={`${headerStyle} text-base md:text-lg`}
+                  id="comparision-to-last-week"
+                >
+                  {t("statistics.comparision")}
+                </h2>
+              </header>
+              <CurrentWeek />
+            </div>
 
-        {/* Graph div */}
-        <div
-          className="rounded-lg shadow-md col-span-1 md:col-span-3 max-w-full max-h-[60vh] md:max-h-auto"
-          aria-labelledby="price-development-graph-heading"
-          role="region"
-        >
-          <header className="text-center bg-neutral-100">
-            <h2
-              className={`${headerStyle} text-base md:text-lg`}
-              id="price-development-graph-heading"
+            {/* Graph div */}
+            <div
+              className="rounded-lg shadow-md col-span-1 md:col-span-3 max-w-full max-h-[60vh] md:max-h-auto"
+              aria-labelledby="price-development-graph-heading"
+              role="region"
             >
-              {t("statistics.priceDevelopmentGraph")}
-            </h2>
-          </header>
-          <PriceDevelopmentGraph />
-        </div>
+              <header className="text-center bg-neutral-100">
+                <h2
+                  className={`${headerStyle} text-base md:text-lg`}
+                  id="price-development-graph-heading"
+                >
+                  {t("statistics.priceDevelopmentGraph")}
+                </h2>
+              </header>
+              <PriceDevelopmentGraph />
+            </div>
+            <div
+              className="rounded-lg shadow-md col-span-1 md:col-span-3 max-w-full max-h-[60vh] md:max-h-auto"
+              aria-labelledby="price-development-graph-heading"
+              role="region"
+            >
+              <header className="text-center bg-neutral-100">
+                <h2
+                  className={`${headerStyle} text-base md:text-lg`}
+                  id="price-development-graph-heading"
+                >
+                  {t("statistics.priceDevelopmentGraph")}
+                </h2>
+              </header>
+              <BarGraph />
+            </div>
 
-        {/* Yearly Pricing Table */}
-        <div
-          className="rounded-lg shadow-md col-span-1 md:col-span-3"
-          aria-labelledby="yearly-pricing-table-heading"
-          role="region"
-          style={{ maxHeight: "60vh" }}
-        >
-          <header className="text-center bg-neutral-100">
-            <h2
-              className={`${headerStyle} text-base md:text-lg`}
-              id="yearly-pricing-table-heading"
+            {/* Yearly Pricing Table */}
+            <div
+              className="rounded-lg shadow-md col-span-1 md:col-span-3"
+              aria-labelledby="yearly-pricing-table-heading"
+              role="region"
+              style={{ maxHeight: "60vh" }}
             >
-              {t("statistics.yearlyPricingTable")}
-            </h2>
-          </header>
-          <YearlyPricingTable />
-        </div>
+              <header className="text-center bg-neutral-100">
+                <h2
+                  className={`${headerStyle} text-base md:text-lg`}
+                  id="yearly-pricing-table-heading"
+                >
+                  {t("statistics.yearlyPricingTable")}
+                </h2>
+              </header>
+              <YearlyPricingTable />
+            </div>
+          </>
+        )}
       </main>
 
       <footer id="source" className="m-4" aria-labelledby="data-source-heading">
@@ -130,6 +161,6 @@ export default function Statistics() {
           </a>
         </p>
       </footer>
-      </>
+    </>
   );
 }

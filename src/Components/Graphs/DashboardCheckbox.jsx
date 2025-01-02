@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import Spinner from "../Common/Spinner";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import { t } from "i18next";
+import DateRangeFilter from "./DateRangeFilter";
 
 const DashboardCheckbox = () => {
-  const { apiData, loading, year, setYear, setData } =
+  const { apiData, loading, year, setYear, setData, data } =
     useStatisticsSectionContext();
   const [selectedOptions, setSelectedOptions] = useState({});
   const [formYear, setFormYear] = useState(year);
 
   useEffect(() => {
-    if (apiData.length > 0) {
+    if (apiData.length > 0 && Object.keys(selectedOptions).length === 0) {
       const initialOptions = apiData.reduce((acc, fuel, index) => {
-        acc[fuel.name] = index < 7; // Default: true for the first 7 items
+        acc[fuel.name] = index < 7;
         return acc;
       }, {});
       setSelectedOptions(initialOptions);
@@ -20,32 +21,29 @@ const DashboardCheckbox = () => {
   }, [apiData]);
 
   useEffect(() => {
-    if (Object.keys(selectedOptions).length > 0) {
-      const updatedData = apiData.filter((fuel) => selectedOptions[fuel.name]);
-      if (updatedData.length > 0) {
-        setData(updatedData);
-      }
-      if (formYear !== year) {
-        setYear(formYear);
-      }
-    }
-  }, [selectedOptions]);
-
-  if (loading) return <Spinner />;
-
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setSelectedOptions((prev) => ({ ...prev, [name]: checked }));
-  };
+    const updatedData = apiData.filter((fuel) => selectedOptions[fuel.name]);
+    setData(updatedData);
+  }, [selectedOptions, apiData]);
 
   const handleYearChange = (e) => {
     setFormYear(e.target.value);
   };
 
   const handleYearSubmit = (e) => {
+
     e.preventDefault();
-    setYear(formYear);
+    if (formYear !== year) {
+      setYear(formYear);
+    }
   };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setSelectedOptions((prev) => ({ ...prev, [name]: checked }));
+  };
+
+  if (loading) return <Spinner />;
+
   return (
     <div className="container mx-auto flex">
       <form className="min-w-full max-h-full group cursor-default select-none py-2 text-gray-900">
@@ -79,14 +77,21 @@ const DashboardCheckbox = () => {
             max={new Date().getFullYear()}
             value={formYear}
             onChange={handleYearChange}
-            className="px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring focus:ring-blue-500"
+            className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
           />
-          <button
+          {/*<button
             className="rounded-r-lg bg-[#297A49] text-white px-2 font-bold"
+            label="Submit a year to display"
             onClick={handleYearSubmit}
           >
             {t("common.show")}
-          </button>
+          </button>*/}
+        </div>
+        <div className="flex m-4 justify-stretch">
+          <DateRangeFilter
+            selectedOptions={selectedOptions}
+            handleYearSubmit={handleYearSubmit}
+          />
         </div>
       </form>
     </div>
