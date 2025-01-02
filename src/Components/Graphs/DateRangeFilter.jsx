@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStatisticsSectionContext } from "../../Context/StatisticsSectionContext";
 import { t } from "i18next";
 
-export default function DateRangeFilter({ onFilter, selectedOptions }) {
-  const { apiData, setData, setWeekInterval, weekInterval } =
+export default function DateRangeFilter({
+  onFilter,
+  selectedOptions,
+  handleYearSubmit,
+}) {
+  const { setData, apiData, setWeekInterval, weekInterval } =
     useStatisticsSectionContext();
   const [formEndWeek, setFormEndWeek] = useState(weekInterval.end);
   const [formStartWeek, setFormStartWeek] = useState(weekInterval.start);
+  useEffect(() => {
+    setFormEndWeek(weekInterval.end);
+  }, [apiData]);
   const handleFilter = (e) => {
+    handleYearSubmit(e);
     e.preventDefault();
     if (formStartWeek < 1 || formEndWeek > 53) return;
     const filteredData = apiData
@@ -62,7 +70,7 @@ export default function DateRangeFilter({ onFilter, selectedOptions }) {
       </div>
       <button
         onClick={handleFilter}
-        className="rounded-r-lg bg-[#297A49] text-white p-2 font-bold"
+        className="rounded bg-[#297A49] text-white p-2 font-bold flex-end"
         label="Set displayed weeks"
       >
         {t("common.show")}

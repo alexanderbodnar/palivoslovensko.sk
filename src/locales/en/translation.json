@@ -5,7 +5,8 @@
     "price": "Price",
     "week": "Week",
     "selectYear": "Year",
-    "value": "Value"
+    "value": "Value",
+    "notFound": "Unable to fetch data for current parameters."
   },
   "navigation": {
     "statistics": "Statistics",

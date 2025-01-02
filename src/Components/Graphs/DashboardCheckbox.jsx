@@ -30,6 +30,7 @@ const DashboardCheckbox = () => {
   };
 
   const handleYearSubmit = (e) => {
+
     e.preventDefault();
     if (formYear !== year) {
       setYear(formYear);
@@ -76,18 +77,21 @@ const DashboardCheckbox = () => {
             max={new Date().getFullYear()}
             value={formYear}
             onChange={handleYearChange}
-            className="px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring focus:ring-blue-500"
+            className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
           />
-          <button
+          {/*<button
             className="rounded-r-lg bg-[#297A49] text-white px-2 font-bold"
             label="Submit a year to display"
             onClick={handleYearSubmit}
           >
             {t("common.show")}
-          </button>
+          </button>*/}
         </div>
         <div className="flex m-4 justify-stretch">
-          <DateRangeFilter selectedOptions={selectedOptions} />
+          <DateRangeFilter
+            selectedOptions={selectedOptions}
+            handleYearSubmit={handleYearSubmit}
+          />
         </div>
       </form>
     </div>
